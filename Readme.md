@@ -1,0 +1,17 @@
+Landmark Remark Application
+---------------------------
+An application for allowing users to store and share their favourite locations.
+
+Tech Stack:
+- C# and Web API Core API
+- SQL Server and Entity Framework Core DB
+- React front-end
+
+Tickets / user stories in this project (what user stories would be created in Jira):
+----------------
+LND-1: As a user, I would like to be able to login to the application.
+LND-2: As a user (of the application) I can see my current location on a map.
+LND-3: As a user I can save a short note at my current location.
+LND-4: As a user I can see notes that I have saved at the location they were saved on the map.
+LND-5: As a user I can see the location, text, and user-name of notes other users have saved.
+LND-6: As a user I have the ability to search for a note based on contained text or user-name.
