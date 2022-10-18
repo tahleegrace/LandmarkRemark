@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.Services", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.Models", "LandmarkRemark.Models\LandmarkRemark.Models.csproj", "{AAFC3686-061C-47A5-879A-73F85988494D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.Mappings", "LandmarkRemark.Mappings\LandmarkRemark.Mappings.csproj", "{9C01C74B-D1B6-4232-8C46-16E849D3D3F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{AAFC3686-061C-47A5-879A-73F85988494D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAFC3686-061C-47A5-879A-73F85988494D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAFC3686-061C-47A5-879A-73F85988494D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C01C74B-D1B6-4232-8C46-16E849D3D3F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C01C74B-D1B6-4232-8C46-16E849D3D3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C01C74B-D1B6-4232-8C46-16E849D3D3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C01C74B-D1B6-4232-8C46-16E849D3D3F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
