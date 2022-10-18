@@ -9,6 +9,8 @@ namespace LandmarkRemark.Entities
     {
         private readonly IConfiguration _configuration;
 
+        public DbSet<User> Users { get; set; }
+
         /// <summary>
         /// Creates a new instance of LandmarkRemarkContext.
         /// </summary>
