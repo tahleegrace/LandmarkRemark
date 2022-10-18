@@ -12,6 +12,7 @@ namespace LandmarkRemark.Entities
         private readonly IConfiguration _configuration;
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Landmark> Landmarks { get; set; }
 
         /// <summary>
         /// Creates a new instance of LandmarkRemarkContext.
@@ -24,7 +25,7 @@ namespace LandmarkRemark.Entities
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(this._configuration.GetConnectionString("LandmarkRemarkContext"));
+            options.UseSqlServer(this._configuration.GetConnectionString("LandmarkRemarkContext"), x => x.UseNetTopologySuite());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
