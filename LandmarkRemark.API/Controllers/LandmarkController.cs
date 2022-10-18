@@ -31,7 +31,7 @@ namespace LandmarkRemark.API.Controllers
         [HttpPost]
         public async Task<ActionResult<LandmarkDTO>> Create(CreateLandmarkRequest request)
         {
-            return await this._landmarkService.Create(request);
+            return Ok(await this._landmarkService.Create(request));
         }
     }
 }
