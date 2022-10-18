@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.API", "LandmarkRemark.API\LandmarkRemark.API.csproj", "{9BCC8F25-DA97-402A-91DE-DB8270D2049D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.Entities", "LandmarkRemark.Entities\LandmarkRemark.Entities.csproj", "{B37745AC-805D-4502-ACE9-1A5DC18A8BFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9BCC8F25-DA97-402A-91DE-DB8270D2049D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BCC8F25-DA97-402A-91DE-DB8270D2049D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BCC8F25-DA97-402A-91DE-DB8270D2049D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B37745AC-805D-4502-ACE9-1A5DC18A8BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B37745AC-805D-4502-ACE9-1A5DC18A8BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B37745AC-805D-4502-ACE9-1A5DC18A8BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B37745AC-805D-4502-ACE9-1A5DC18A8BFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
