@@ -7,15 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandmarkRemark.API", "Landm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandmarkRemark.Entities", "LandmarkRemark.Entities\LandmarkRemark.Entities.csproj", "{B37745AC-805D-4502-ACE9-1A5DC18A8BFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.Repository", "LandmarkRemark.Repository\LandmarkRemark.Repository.csproj", "{DB30C710-A805-4762-BC9E-E692E9C35512}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandmarkRemark.Repository", "LandmarkRemark.Repository\LandmarkRemark.Repository.csproj", "{DB30C710-A805-4762-BC9E-E692E9C35512}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandmarkRemark.Repository.Tests", "LandmarkRemark.Repository.Tests\LandmarkRemark.Repository.Tests.csproj", "{4C54E1B7-544B-4AFC-8E39-23FAE205A4DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.Services", "LandmarkRemark.Services\LandmarkRemark.Services.csproj", "{A17345C6-386B-47AD-9AF8-72FB973F9925}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandmarkRemark.Services", "LandmarkRemark.Services\LandmarkRemark.Services.csproj", "{A17345C6-386B-47AD-9AF8-72FB973F9925}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.Models", "LandmarkRemark.Models\LandmarkRemark.Models.csproj", "{AAFC3686-061C-47A5-879A-73F85988494D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandmarkRemark.Models", "LandmarkRemark.Models\LandmarkRemark.Models.csproj", "{AAFC3686-061C-47A5-879A-73F85988494D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.Mappings", "LandmarkRemark.Mappings\LandmarkRemark.Mappings.csproj", "{9C01C74B-D1B6-4232-8C46-16E849D3D3F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandmarkRemark.Mappings", "LandmarkRemark.Mappings\LandmarkRemark.Mappings.csproj", "{9C01C74B-D1B6-4232-8C46-16E849D3D3F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.Services.Tests", "LandmarkRemark.Services.Tests\LandmarkRemark.Services.Tests.csproj", "{CCF97780-ADD4-493B-A052-EE6FAECC5A18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{9C01C74B-D1B6-4232-8C46-16E849D3D3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C01C74B-D1B6-4232-8C46-16E849D3D3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C01C74B-D1B6-4232-8C46-16E849D3D3F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCF97780-ADD4-493B-A052-EE6FAECC5A18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCF97780-ADD4-493B-A052-EE6FAECC5A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCF97780-ADD4-493B-A052-EE6FAECC5A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCF97780-ADD4-493B-A052-EE6FAECC5A18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
