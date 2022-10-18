@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="automapper" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LandmarkRemark.Entities\LandmarkRemark.Entities.csproj" />
+    <ProjectReference Include="..\LandmarkRemark.Models\LandmarkRemark.Models.csproj" />
     <ProjectReference Include="..\LandmarkRemark.Repository\LandmarkRemark.Repository.csproj" />
   </ItemGroup>
 
