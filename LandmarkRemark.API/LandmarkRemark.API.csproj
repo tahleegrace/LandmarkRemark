@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LandmarkRemark.Entities\LandmarkRemark.Entities.csproj" />
+    <ProjectReference Include="..\LandmarkRemark.Repository\LandmarkRemark.Repository.csproj" />
   </ItemGroup>
 
 </Project>
