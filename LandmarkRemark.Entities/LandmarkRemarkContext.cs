@@ -11,8 +11,8 @@ namespace LandmarkRemark.Entities
     {
         private readonly IConfiguration _configuration;
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Landmark> Landmarks { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Landmark> Landmarks { get; set; }
 
         /// <summary>
         /// Creates a new instance of LandmarkRemarkContext.
