@@ -8,12 +8,12 @@
         /// <summary>
         /// Gets or sets the longitude.
         /// </summary>
-        public decimal Longitude { get; set; }
+        public double Longitude { get; set; }
 
         /// <summary>
         /// Gets or sets the latitude.
         /// </summary>
-        public decimal Latitude { get; set; }
+        public double Latitude { get; set; }
 
         /// <summary>
         /// Gets or sets the notes about the landmark.
