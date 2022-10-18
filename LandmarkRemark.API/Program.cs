@@ -1,3 +1,5 @@
+using LandmarkRemark.Entities;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Services.AddBearerAuthentication(builder.Configuration);
 //builder.Services.AddAutoMapper(typeof(MappingsSetup).Assembly);
-//builder.Services.AddDbContext<LandmarkRemarkContext>();
+builder.Services.AddDbContext<LandmarkRemarkContext>();
 //builder.Services.AddLandmarkRemarkRepositories();
 //builder.Services.AddLandmarkRemarkServices();
 
