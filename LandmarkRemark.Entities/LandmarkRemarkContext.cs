@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+using LandmarkRemark.Entities.Configuration;
+
 namespace LandmarkRemark.Entities
 {
     /// <summary>
@@ -23,6 +25,11 @@ namespace LandmarkRemark.Entities
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options.UseSqlServer(this._configuration.GetConnectionString("LandmarkRemarkContext"));
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
     }
 }
