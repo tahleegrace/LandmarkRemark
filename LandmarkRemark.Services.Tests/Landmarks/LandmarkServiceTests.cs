@@ -40,7 +40,7 @@ namespace LandmarkRemark.Services.Tests.Landmarks
 
             // Verify a new landmark was created.
             repository.Verify(r => r.Create(It.Is<Landmark>(l => l.Notes == request.Notes && l.Location.X == request.Longitude
-                && l.Location.Y == request.Latitude && l.UserId == request.UserId)));
+                && l.Location.Y == request.Latitude && l.Location.SRID == 4326 && l.UserId == request.UserId)));
 
             // Verify the correct DTO is returned.
             Assert.AreEqual(request.Notes, result.Notes);

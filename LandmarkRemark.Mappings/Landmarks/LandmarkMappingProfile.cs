@@ -13,8 +13,9 @@ namespace LandmarkRemark.Mappings.Landmarks
     {
         public LandmarkMappingProfile()
         {
+            // EPSG 4326 Spatial Reference System is being used for the location.
             CreateMap<CreateLandmarkRequest, Landmark>()
-                .ForMember(dest => dest.Location, source => source.MapFrom(item => new Point(item.Longitude, item.Latitude)));
+                .ForMember(dest => dest.Location, source => source.MapFrom(item => new Point(item.Longitude, item.Latitude) { SRID = 4326 }));
 
             CreateMap<Landmark, LandmarkDTO>()
                 .ForMember(dest => dest.Longitude, source => source.MapFrom(item => item.Location.X))

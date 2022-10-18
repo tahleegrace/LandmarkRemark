@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
+using LandmarkRemark.Models.Landmarks;
+using LandmarkRemark.Services.Landmarks;
+
 namespace LandmarkRemark.API.Controllers
 {
     /// <summary>
@@ -9,11 +12,26 @@ namespace LandmarkRemark.API.Controllers
     [ApiController]
     public class LandmarkController : ControllerBase
     {
-        [HttpGet("test")]
-        public async Task<ActionResult<string>> Test()
+        private readonly ILandmarkService _landmarkService;
+
+        /// <summary>
+        /// Creates a new instance of LandmarkController.
+        /// </summary>
+        /// <param name="landmarkService">The landmark service.</param>
+        public LandmarkController(ILandmarkService landmarkService)
         {
-            // TODO: Remove this method once a working landmark endpoint is implemented.
-            return "This is a test";
+            this._landmarkService = landmarkService;
+        }
+
+        /// <summary>
+        /// Creates a new landmark.
+        /// </summary>
+        /// <param name="request">The landmark.</param>
+        /// <returns>The newly created landmark.</returns>
+        [HttpPost]
+        public async Task<ActionResult<LandmarkDTO>> Create(CreateLandmarkRequest request)
+        {
+            return await this._landmarkService.Create(request);
         }
     }
 }
