@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.Services.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandmarkRemark.API.Tests", "LandmarkRemark.API.Tests\LandmarkRemark.API.Tests.csproj", "{0C07F982-3E68-419F-987B-E27A56F292BF}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "LandmarkRemark.UI", "LandmarkRemark.UI\LandmarkRemark.UI.esproj", "{93D6CB18-686F-4298-946C-ED41D5BA054B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,12 @@ Global
 		{0C07F982-3E68-419F-987B-E27A56F292BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C07F982-3E68-419F-987B-E27A56F292BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C07F982-3E68-419F-987B-E27A56F292BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93D6CB18-686F-4298-946C-ED41D5BA054B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93D6CB18-686F-4298-946C-ED41D5BA054B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93D6CB18-686F-4298-946C-ED41D5BA054B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{93D6CB18-686F-4298-946C-ED41D5BA054B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93D6CB18-686F-4298-946C-ED41D5BA054B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93D6CB18-686F-4298-946C-ED41D5BA054B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
