@@ -1,10 +1,9 @@
 import React from 'react';
+import Map from './components/map/map';
 
 function App() {
-  return (
-    <div>
-      This is a test.
-    </div>
+    return (
+        <Map></Map>
   );
 }
 
