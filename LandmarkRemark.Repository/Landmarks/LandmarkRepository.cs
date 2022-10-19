@@ -1,4 +1,6 @@
-﻿using LandmarkRemark.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+
+using LandmarkRemark.Entities;
 
 namespace LandmarkRemark.Repository.Landmarks
 {
@@ -33,6 +35,16 @@ namespace LandmarkRemark.Repository.Landmarks
             await this._context.SaveChangesAsync();
 
             return landmark;
+        }
+
+        /// <summary>
+        /// Finds the landmarks for the specified user.
+        /// </summary>
+        /// <param name="userId">The ID of the user.</param>
+        /// <returns>The landmarks for the specified user.</returns>
+        public async Task<List<Landmark>> FindByUserId(int userId)
+        {
+            return await this._context.Landmarks.Where(l => l.UserId == userId && !l.Deleted).ToListAsync();
         }
     }
 }

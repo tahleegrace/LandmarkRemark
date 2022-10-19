@@ -13,5 +13,12 @@ namespace LandmarkRemark.Repository.Landmarks
         /// <param name="landmark">The landmark.</param>
         /// <returns>The new landmark.</returns>
         Task<Landmark> Create(Landmark landmark);
+
+        /// <summary>
+        /// Finds the landmarks for the specified user.
+        /// </summary>
+        /// <param name="userId">The ID of the user.</param>
+        /// <returns>The landmarks for the specified user.</returns>
+        Task<List<Landmark>> FindByUserId(int userId);
     }
 }
