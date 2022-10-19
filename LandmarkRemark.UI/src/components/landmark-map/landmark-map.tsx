@@ -72,14 +72,18 @@ function LandmarkMap() {
 
     const mapClicked = async (e: google.maps.MapMouseEvent) => {
         if (!isNil(e.latLng?.lat()) && !isNil(e.latLng?.lng())) {
-            const request: CreateLandmarkRequest = {
-                notes: 'This is a test', // TODO: Allow this to be input by the end user.
-                longitude: e.latLng?.lng() as number,
-                latitude: e.latLng?.lat() as number,
-                userId: 1 // TODO: Remvoe this once authentication is implemented.
-            };
+            var notes = prompt('Enter notes about this location');
 
-            await landmarksService.create(request);
+            if (notes && notes.length > 0) {
+                const request: CreateLandmarkRequest = {
+                    notes: notes,
+                    longitude: e.latLng?.lng() as number,
+                    latitude: e.latLng?.lat() as number,
+                    userId: 1 // TODO: Remvoe this once authentication is implemented.
+                };
+
+                await landmarksService.create(request);
+            }
         }
     };
 
