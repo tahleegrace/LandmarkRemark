@@ -1,13 +1,18 @@
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
+import { isNil } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import config from "../../config";
 import useDeepCompareEffectForMaps from "../../helpers/google-maps-helpers";
+import { CreateLandmarkRequest } from "../../interfaces/landmarks/create-landmark-request";
+import { LandmarksService } from "../../services/landmarks/landmarks.service";
 
 const render = (status: Status) => {
     return <h1>{status}</h1>;
 };
 
 function LandmarkMap() {
+    const landmarksService = new LandmarksService(); // TODO: Ideally this should be injected using a DI framework.
+
     // Create the initial zoom level and center state.
     const [zoom, setZoom] = useState(10);
 
@@ -65,8 +70,17 @@ function LandmarkMap() {
         return <div ref={ref} style={style} />
     };
 
-    const mapClicked = (e: google.maps.MapMouseEvent) => {
-        alert(`${e.latLng?.lat()}, ${e.latLng?.lng()}`);
+    const mapClicked = async (e: google.maps.MapMouseEvent) => {
+        if (!isNil(e.latLng?.lat()) && !isNil(e.latLng?.lng())) {
+            const request: CreateLandmarkRequest = {
+                notes: 'This is a test', // TODO: Allow this to be input by the end user.
+                longitude: e.latLng?.lng() as number,
+                latitude: e.latLng?.lat() as number,
+                userId: 1 // TODO: Remvoe this once authentication is implemented.
+            };
+
+            await landmarksService.create(request);
+        }
     };
 
     return (

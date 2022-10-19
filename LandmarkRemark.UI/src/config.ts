@@ -1,6 +1,9 @@
 // TODO: In production, we'd have different config files for production, development and testing.
 // TODO: Ideally, the Google Maps API key shouldn't be stored in plain-text here.
 const local = {
+    api: {
+        url: 'https://localhost:60684/api'
+    },
     googleMaps: {
         apiKey: 'AIzaSyAfj0Q7GSenYdjF5V69Q-wo67QPJU9bjmk'
     }
