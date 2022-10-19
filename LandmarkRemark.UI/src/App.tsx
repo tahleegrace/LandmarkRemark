@@ -1,9 +1,9 @@
 import React from 'react';
-import Map from './components/map/map';
+import LandmarkMap from './components/landmark-map/landmark-map';
 
 function App() {
     return (
-        <Map></Map>
+        <LandmarkMap></LandmarkMap>
   );
 }
 
