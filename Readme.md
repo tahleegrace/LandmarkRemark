@@ -27,10 +27,6 @@ The token will be stored in memory in the React application and sent to all APIs
 
 The user ID in this token will be stored against the user ID field on the landmarks table.
 
-LND-4:
-------
-I will use the Google React Marker component to display the notes on the map.
-
 LND-5:
 ------
 I will use EF Core with a search similar to LND-4, except without a supplied user ID. These will be displayed as per LND-4.
