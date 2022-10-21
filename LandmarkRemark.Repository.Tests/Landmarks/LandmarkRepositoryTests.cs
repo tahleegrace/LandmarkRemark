@@ -42,5 +42,83 @@ namespace LandmarkRemark.Repository.Tests.Landmarks
                 && l.Updated.Day == DateTime.UtcNow.Day && !l.Deleted)));
             context.Verify(c => c.SaveChangesAsync(It.IsAny<CancellationToken>()));
         }
+
+        /// <summary>
+        /// Tests finding landmarks by user ID when the user has some saved landmarks.
+        /// </summary>
+        [Test]
+        public async Task TestFindByUserIdWorksSuccesfullyWhenUserHasLandmarks()
+        {
+            // Set up the context and repository.
+            var configuration = Mock.Of<IConfiguration>();
+
+            var landmarks = new List<Landmark>()
+            {
+                new Landmark()
+                {
+                    Notes = "Parliament House, Canberra",
+                    Location = new Point(149.125241, -35.307003),
+                    UserId = 1
+                },
+                new Landmark()
+                {
+                    Notes = "Parliament House, Brisbane",
+                    Location = new Point(153.0252065, -27.4754275),
+                    UserId = 2
+                },
+            };
+
+            var context = new Mock<LandmarkRemarkContext>(configuration);
+            context.SetupGet(x => x.Landmarks).ReturnsDbSet(landmarks);
+
+            var repository = new LandmarkRepository(context.Object);
+
+            // Search for landmarks.
+            var userId = 1;
+
+            var result = await repository.FindByUserId(userId);
+
+            // Make sure one landmark is returned.
+            Assert.AreEqual(1, result.Count);
+        }
+
+        /// <summary>
+        /// Tests finding landmarks by user ID when the user has no saved landmarks.
+        /// </summary>
+        [Test]
+        public async Task TestFindByUserIdWorksSuccesfullyWhenUserHasNoLandmarks()
+        {
+            // Set up the context and repository.
+            var configuration = Mock.Of<IConfiguration>();
+
+            var landmarks = new List<Landmark>()
+            {
+                new Landmark()
+                {
+                    Notes = "Parliament House, Canberra",
+                    Location = new Point(149.125241, -35.307003),
+                    UserId = 2
+                },
+                new Landmark()
+                {
+                    Notes = "Parliament House, Brisbane",
+                    Location = new Point(153.0252065, -27.4754275),
+                    UserId = 2
+                },
+            };
+
+            var context = new Mock<LandmarkRemarkContext>(configuration);
+            context.SetupGet(x => x.Landmarks).ReturnsDbSet(landmarks);
+
+            var repository = new LandmarkRepository(context.Object);
+
+            // Search for landmarks.
+            var userId = 1;
+
+            var result = await repository.FindByUserId(userId);
+
+            // Make sure no landmarks are returned.
+            Assert.AreEqual(0, result.Count);
+        }
     }
 }

@@ -7,6 +7,7 @@ using LandmarkRemark.Mappings.Landmarks;
 using LandmarkRemark.Models.Landmarks;
 using LandmarkRemark.Repository.Landmarks;
 using LandmarkRemark.Services.Landmarks;
+using NetTopologySuite.Geometries;
 
 namespace LandmarkRemark.Services.Tests.Landmarks
 {
@@ -34,7 +35,7 @@ namespace LandmarkRemark.Services.Tests.Landmarks
                 UserId = 1
             };
 
-            // Create tbe landmark.
+            // Create the landmark.
             var result = await landmarkService.Create(request);
 
             // Verify a new landmark was created.
@@ -45,6 +46,45 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             Assert.AreEqual(request.Notes, result.Notes);
             Assert.AreEqual(request.Longitude, result.Longitude);
             Assert.AreEqual(request.Latitude, result.Latitude);
+        }
+
+        /// <summary>
+        /// Tests finding landmarks by user ID.
+        /// </summary>
+        [Test]
+        public async Task TestFindByUserIdWorksSuccessfully()
+        {
+            // Set up the repository, mapper and service.
+            var repository = new Mock<ILandmarkRepository>();
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<LandmarkMappingProfile>()).CreateMapper();
+            var landmarkService = new LandmarkService(repository.Object, mapper);
+
+            // Set up the test data.
+            var landmarks = new List<Landmark>()
+            {
+                new Landmark()
+                {
+                    Id = 1,
+                    Notes = "Parliament House, Canberra",
+                    Location = new Point(149.125241, -35.307003),
+                    UserId = 1
+                }
+            };
+
+            repository.Setup(r => r.FindByUserId(It.IsAny<int>())).ReturnsAsync(landmarks);
+
+            // Search for landmarks.
+            int userId = 1;
+
+            var result = await landmarkService.FindByUserId(userId);
+
+            // Verify the correct landmark is returned.
+            repository.Verify(r => r.FindByUserId(userId));
+
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(landmarks[0].Notes, result[0].Notes);
+            Assert.AreEqual(landmarks[0].Location.X, result[0].Longitude);
+            Assert.AreEqual(landmarks[0].Location.Y, result[0].Latitude);
         }
     }
 }

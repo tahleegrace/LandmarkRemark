@@ -52,5 +52,37 @@ namespace LandmarkRemark.API.Tests.Controllers
             Assert.AreEqual(StatusCodes.Status200OK, result.StatusCode);
             Assert.AreEqual(mockLandmarkDTO, newLandmark);
         }
+
+        /// <summary>
+        /// Tests finding landmarks by user ID.
+        /// </summary>
+        [Test]
+        public async Task TestFindByUserIdWorksSuccessfully()
+        {
+            // Set up the controller and service.
+            var mockLandmarkDTO = new LandmarkDTO()
+            {
+                Notes = "This is a test",
+                Longitude = 149.125241,
+                Latitude = -35.307003
+            };
+
+            var service = new Mock<ILandmarkService>();
+            service.Setup(s => s.FindByUserId(It.IsAny<int>())).ReturnsAsync(new List<LandmarkDTO>() { mockLandmarkDTO });
+
+            var landmarkController = new LandmarkController(service.Object);
+
+            // Find the landmarks for the user.
+            int userId = 1;
+
+            var response = await landmarkController.FindByUserId(userId);
+            var result = response.Result as OkObjectResult;
+            var landmarks = result.Value as List<LandmarkDTO>;
+
+            // Verify the correct DTO was returned.
+            service.Verify(s => s.FindByUserId(userId));
+
+            Assert.AreEqual(mockLandmarkDTO, landmarks[0]);
+        }
     }
 }
