@@ -18,4 +18,13 @@ export class HttpService {
 
         return await response.json();
     }
+
+    public async get<ReturnType>(url: string): Promise<ReturnType> {
+        const response = await fetch(`${config.api.url}/${url}`, {
+            method: 'GET',
+            headers: this.getHeaders() as any,
+        });
+
+        return await response.json();
+    }
 }

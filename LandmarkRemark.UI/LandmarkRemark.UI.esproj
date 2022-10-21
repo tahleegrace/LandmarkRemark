@@ -11,6 +11,8 @@
     <Script Include="**" Exclude="*.esproj;**\node_modules\**" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\components\map\" />
+    <Folder Include="src\components\marker\" />
     <Folder Include="src\helpers\" />
     <Folder Include="src\services\http\" />
     <Folder Include="src\services\landmarks\" />
