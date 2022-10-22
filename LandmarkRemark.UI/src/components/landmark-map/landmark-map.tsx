@@ -3,6 +3,7 @@ import { isNil } from "lodash";
 import { useState } from "react";
 import config from "../../config";
 import Map from "../map/map";
+import "./landmark-map.scss";
 import { CreateLandmarkRequest } from "../../interfaces/landmarks/create-landmark-request";
 import { LandmarksService } from "../../services/landmarks/landmarks.service";
 import { LandmarkDTO } from "../../interfaces/landmarks/landmark-dto";
@@ -11,6 +12,10 @@ import Marker from "../marker/marker";
 const render = (status: Status) => {
     return <h1>{status}</h1>;
 };
+
+const noLandmarksVisibleView = '';
+const myLandmarksView = 'my-landmarks';
+const allLandmarksView = 'all-landmarks';
 
 function LandmarkMap() {
     const landmarksService = new LandmarksService(); // TODO: Ideally this should be injected using a DI framework.
@@ -27,6 +32,7 @@ function LandmarkMap() {
 
     // Set the initial landmarks.
     const [landmarks, setLandmarks] = useState<LandmarkDTO[]>([]);
+    const [currentView, setCurrentView] = useState<string>('');
 
     // Get the current location and show that on the map.
     if (!currentLocationIsSet) {
@@ -49,24 +55,41 @@ function LandmarkMap() {
                 };
 
                 await landmarksService.create(request);
-
-                alert('Marker created');
             }
         }
     };
 
-    const showMyLandmarks = () => {
+    const showMyLandmarks = async () => {
         // TODO: Remove the user ID once authentication is implemented.
-        landmarksService.findByUserId(1).then((myLandmarks) => {
-            setLandmarks(myLandmarks);
-        });
+        const result = await landmarksService.findByUserId(1);
+
+        setCurrentView(myLandmarksView);
+        setLandmarks(result);
+    };
+
+    const showAllLandmarks = async () => {
+        const result = await landmarksService.findAll();
+
+        setCurrentView(allLandmarksView);
+        setLandmarks(result);
+    };
+
+    const hideLandmarks = async () => {
+        setCurrentView(noLandmarksVisibleView);
+        setLandmarks([]);
+    };
+
+    const getNavigationLinkStyle = (linkName: string) => {
+        return currentView == linkName ? 'disabled' : '';
     };
 
     return (
         <div>
             <div>Click on the map to create a marker</div>
-            <div>
-                <a href="#" onClick={showMyLandmarks}>Show My Landmarks</a>
+            <div className="navigation">
+                <a href="#" onClick={showMyLandmarks} className={getNavigationLinkStyle(myLandmarksView)}>Show My Landmarks</a>
+                <a href="#" onClick={showAllLandmarks} className={getNavigationLinkStyle(allLandmarksView)}>Show All Landmarks</a>
+                <a href="#" onClick={hideLandmarks} className={getNavigationLinkStyle(noLandmarksVisibleView)}>Hide Landmarks</a>
             </div>
             <Wrapper apiKey={config.googleMaps.apiKey} render={render}>
                 <Map style={{ width: "1000px", height: "1000px" }} center={center} zoom={zoom} onClick={mapClicked}>

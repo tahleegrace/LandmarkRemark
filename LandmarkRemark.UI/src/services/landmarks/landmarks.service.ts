@@ -17,4 +17,10 @@ export class LandmarksService {
 
         return this.httpService.get<LandmarkDTO[]>(url);
     }
+
+    public async findAll(): Promise<LandmarkDTO[]> {
+        const url = 'landmarks';
+
+        return this.httpService.get<LandmarkDTO[]>(url);
+    }
 }

@@ -17,9 +17,11 @@
     "fast-equals": "^4.0.3",
     "jest-editor-support": "^30.2.0",
     "lodash": "^4.17.21",
+    "node-sass": "^7.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "sass": "^1.55.0",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },

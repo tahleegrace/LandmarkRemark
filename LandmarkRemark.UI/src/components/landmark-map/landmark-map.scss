@@ -1,0 +1,17 @@
+div.navigation {
+    a {
+        margin-right: 10px;
+    }
+
+    a:last-child {
+        margin-right: 0px;
+    }
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+a.disabled {
+    pointer-events: none;
+    text-decoration: none;
+}
