@@ -1,5 +1,5 @@
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
-import { isNil } from "lodash";
+import { cloneDeep, isNil } from "lodash";
 import { useState } from "react";
 import config from "../../config";
 import Map from "../map/map";
@@ -44,7 +44,7 @@ function LandmarkMap() {
 
     const mapClicked = async (e: google.maps.MapMouseEvent) => {
         if (!isNil(e.latLng?.lat()) && !isNil(e.latLng?.lng())) {
-            var notes = prompt('Enter notes about this location');
+            const notes = prompt('Enter notes about this location');
 
             if (notes && notes.length > 0) {
                 const request: CreateLandmarkRequest = {
@@ -54,7 +54,14 @@ function LandmarkMap() {
                     userId: 1 // TODO: Remove this once authentication is implemented.
                 };
 
-                await landmarksService.create(request);
+                const result = await landmarksService.create(request);
+
+                // Add the landmark to the map if we are showing landmarks.
+                if (currentView !== noLandmarksVisibleView) {
+                    let newLandmarks = cloneDeep(landmarks);
+                    newLandmarks.push(result);
+                    setLandmarks(newLandmarks);
+                }
             }
         }
     };
@@ -80,7 +87,7 @@ function LandmarkMap() {
     };
 
     const getNavigationLinkStyle = (linkName: string) => {
-        return currentView == linkName ? 'disabled' : '';
+        return currentView === linkName ? 'disabled' : '';
     };
 
     return (
