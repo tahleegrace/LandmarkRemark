@@ -35,7 +35,7 @@ namespace LandmarkRemark.Services.Landmarks
             // TODO: Check that the request is not null.
 
             var newLandmark = this._mapper.Map<Landmark>(request);
-            await this._landmarkRepository.Create(newLandmark);
+            newLandmark = await this._landmarkRepository.Create(newLandmark);
 
             var result = this._mapper.Map<LandmarkDTO>(newLandmark);
             return result;

@@ -3,4 +3,5 @@ export interface LandmarkDTO {
     longitude: number;
     latitude: number;
     notes: string;
+    userFullName: string;
 }

@@ -14,6 +14,24 @@ namespace LandmarkRemark.Services.Tests.Landmarks
     [TestFixture]
     public class LandmarkServiceTests
     {
+        private readonly List<User> testUsers = new List<User>()
+        {
+            new User()
+            {
+                Id = 1,
+                FirstName = "Anthony",
+                LastName = "Albanese",
+                EmailAddress = "anthony.albanese@example.com"
+            },
+            new User()
+            {
+                Id = 2,
+                FirstName = "Richard",
+                LastName = "Marles",
+                EmailAddress = "richard.marles@example.com"
+            }
+        };
+
         /// <summary>
         /// Tests creating a new landmark.
         /// </summary>
@@ -22,14 +40,26 @@ namespace LandmarkRemark.Services.Tests.Landmarks
         {
             // Set up the repository, mapper and service.
             var repository = new Mock<ILandmarkRepository>();
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<LandmarkMappingProfile>()).CreateMapper();
+            var mapper = new MapperConfiguration(config => config.AddProfile<LandmarkMappingProfile>()).CreateMapper();
             var landmarkService = new LandmarkService(repository.Object, mapper);
+
+            repository.Setup(r => r.Create(It.IsAny<Landmark>())).ReturnsAsync
+            (
+                new Landmark()
+                {
+                    Id = 1,
+                    Notes = "Parliament House, Canberra",
+                    Location = new Point(149.125241, -35.307003),
+                    UserId = 1,
+                    User = testUsers[0]
+                }
+            );
 
             // Set up the test data.
             var request = new CreateLandmarkRequest()
             {
                 // Parliament Houe, Canberra.
-                Notes = "This is a test",
+                Notes = "Parliament House, Canberra",
                 Longitude = 149.125241,
                 Latitude = -35.307003,
                 UserId = 1
@@ -46,6 +76,7 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             Assert.AreEqual(request.Notes, result.Notes);
             Assert.AreEqual(request.Longitude, result.Longitude);
             Assert.AreEqual(request.Latitude, result.Latitude);
+            Assert.AreEqual("Anthony Albanese", result.UserFullName);
         }
 
         /// <summary>
@@ -56,7 +87,7 @@ namespace LandmarkRemark.Services.Tests.Landmarks
         {
             // Set up the repository, mapper and service.
             var repository = new Mock<ILandmarkRepository>();
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<LandmarkMappingProfile>()).CreateMapper();
+            var mapper = new MapperConfiguration(config => config.AddProfile<LandmarkMappingProfile>()).CreateMapper();
             var landmarkService = new LandmarkService(repository.Object, mapper);
 
             // Set up the test data.
@@ -67,7 +98,8 @@ namespace LandmarkRemark.Services.Tests.Landmarks
                     Id = 1,
                     Notes = "Parliament House, Canberra",
                     Location = new Point(149.125241, -35.307003),
-                    UserId = 1
+                    UserId = 1,
+                    User = testUsers[0]
                 }
             };
 
@@ -85,6 +117,7 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             Assert.AreEqual(landmarks[0].Notes, result[0].Notes);
             Assert.AreEqual(landmarks[0].Location.X, result[0].Longitude);
             Assert.AreEqual(landmarks[0].Location.Y, result[0].Latitude);
+            Assert.AreEqual("Anthony Albanese", result[0].UserFullName);
         }
 
         /// <summary>
@@ -95,7 +128,7 @@ namespace LandmarkRemark.Services.Tests.Landmarks
         {
             // Set up the repository, mapper and service.
             var repository = new Mock<ILandmarkRepository>();
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<LandmarkMappingProfile>()).CreateMapper();
+            var mapper = new MapperConfiguration(config => config.AddProfile<LandmarkMappingProfile>()).CreateMapper();
             var landmarkService = new LandmarkService(repository.Object, mapper);
 
             // Set up the test data.
@@ -106,7 +139,8 @@ namespace LandmarkRemark.Services.Tests.Landmarks
                     Id = 1,
                     Notes = "Parliament House, Canberra",
                     Location = new Point(149.125241, -35.307003),
-                    UserId = 1
+                    UserId = 1,
+                    User = testUsers[0]
                 }
             };
 
@@ -122,6 +156,7 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             Assert.AreEqual(landmarks[0].Notes, result[0].Notes);
             Assert.AreEqual(landmarks[0].Location.X, result[0].Longitude);
             Assert.AreEqual(landmarks[0].Location.Y, result[0].Latitude);
+            Assert.AreEqual("Anthony Albanese", result[0].UserFullName);
         }
     }
 }

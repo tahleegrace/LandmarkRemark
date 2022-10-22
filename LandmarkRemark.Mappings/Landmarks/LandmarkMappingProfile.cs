@@ -19,7 +19,8 @@ namespace LandmarkRemark.Mappings.Landmarks
 
             CreateMap<Landmark, LandmarkDTO>()
                 .ForMember(dest => dest.Longitude, source => source.MapFrom(item => item.Location.X))
-                .ForMember(dest => dest.Latitude, source => source.MapFrom(item => item.Location.Y));
+                .ForMember(dest => dest.Latitude, source => source.MapFrom(item => item.Location.Y))
+                .ForMember(dest => dest.UserFullName, source => source.MapFrom(item => $"{item.User.FirstName} {item.User.LastName}"));
         }
     }
 }

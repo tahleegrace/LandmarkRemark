@@ -101,7 +101,7 @@ function LandmarkMap() {
             <Wrapper apiKey={config.googleMaps.apiKey} render={render}>
                 <Map style={{ width: "1000px", height: "1000px" }} center={center} zoom={zoom} onClick={mapClicked}>
                     {landmarks.map((landmark, i) => (
-                        <Marker key={i} position={{ lat: landmark.latitude, lng: landmark.longitude }} title={landmark.notes}></Marker>
+                        <Marker key={i} position={{ lat: landmark.latitude, lng: landmark.longitude }} title={`${landmark.notes} (Created By: ${landmark.userFullName})`}></Marker>
                     ))}
                 </Map>
             </Wrapper>

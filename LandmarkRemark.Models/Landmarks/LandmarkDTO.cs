@@ -24,5 +24,10 @@
         /// Gets or sets the notes about the landmark.
         /// </summary>
         public string Notes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the full name of the user who created the landmark.
+        /// </summary>
+        public string UserFullName { get; set; }
     }
 }

@@ -22,7 +22,8 @@ namespace LandmarkRemark.API.Tests.Controllers
             {
                 Notes = "This is a test",
                 Longitude = 149.125241,
-                Latitude = -35.307003
+                Latitude = -35.307003,
+                UserFullName = "Anthony Albanese"
             };
 
             var service = new Mock<ILandmarkService>();
@@ -64,7 +65,8 @@ namespace LandmarkRemark.API.Tests.Controllers
             {
                 Notes = "This is a test",
                 Longitude = 149.125241,
-                Latitude = -35.307003
+                Latitude = -35.307003,
+                UserFullName = "Anthony Albanese"
             };
 
             var service = new Mock<ILandmarkService>();
@@ -96,7 +98,8 @@ namespace LandmarkRemark.API.Tests.Controllers
             {
                 Notes = "This is a test",
                 Longitude = 149.125241,
-                Latitude = -35.307003
+                Latitude = -35.307003,
+                UserFullName = "Anthony Albanese"
             };
 
             var service = new Mock<ILandmarkService>();

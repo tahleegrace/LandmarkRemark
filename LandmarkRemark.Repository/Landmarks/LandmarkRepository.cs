@@ -27,12 +27,18 @@ namespace LandmarkRemark.Repository.Landmarks
         /// <returns>The new landmark.</returns>
         public async Task<Landmark> Create(Landmark landmark)
         {
+            // Update the timestamps on the landmark.
             landmark.Created = DateTime.UtcNow;
             landmark.Updated = DateTime.UtcNow;
 
+            // Save the landmark.
             this._context.Landmarks.Add(landmark);
 
             await this._context.SaveChangesAsync();
+
+            // Get the user who created the landmark. .Include isn't supported when adding a new record.
+            var user = await this._context.Users.Where(u => u.Id == landmark.UserId).FirstOrDefaultAsync();
+            landmark.User = user;
 
             return landmark;
         }
@@ -44,7 +50,9 @@ namespace LandmarkRemark.Repository.Landmarks
         /// <returns>The landmarks for the specified user.</returns>
         public async Task<List<Landmark>> FindByUserId(int userId)
         {
-            return await this._context.Landmarks.Where(l => l.UserId == userId && !l.Deleted).ToListAsync();
+            return await this._context.Landmarks.Include(l => l.User)
+                                                .Where(l => l.UserId == userId && !l.Deleted)
+                                                .ToListAsync();
         }
 
         /// <summary>
@@ -53,7 +61,9 @@ namespace LandmarkRemark.Repository.Landmarks
         /// <returns>All landmarks that have been added.</returns>
         public async Task<List<Landmark>> FindAll()
         {
-            return await this._context.Landmarks.Where(l => !l.Deleted).ToListAsync();
+            return await this._context.Landmarks.Include(l => l.User)
+                                                .Where(l => !l.Deleted)
+                                                .ToListAsync();
         }
     }
 }

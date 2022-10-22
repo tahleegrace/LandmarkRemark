@@ -11,6 +11,24 @@ namespace LandmarkRemark.Repository.Tests.Landmarks
     [TestFixture]
     public class LandmarkRepositoryTests
     {
+        private readonly List<User> testUsers = new List<User>()
+        {
+            new User()
+            {
+                Id = 1,
+                FirstName = "Anthony",
+                LastName = "Albanese",
+                EmailAddress = "anthony.albanese@example.com"
+            },
+            new User()
+            {
+                Id = 2,
+                FirstName = "Richard",
+                LastName = "Marles",
+                EmailAddress = "richard.marles@example.com"
+            }
+        };
+
         /// <summary>
         /// Tests creating a new landmark.
         /// </summary>
@@ -22,7 +40,8 @@ namespace LandmarkRemark.Repository.Tests.Landmarks
 
             var landmarks = new List<Landmark>();
             var context = new Mock<LandmarkRemarkContext>(configuration);
-            context.SetupGet(x => x.Landmarks).ReturnsDbSet(landmarks);
+            context.SetupGet(c => c.Landmarks).ReturnsDbSet(landmarks);
+            context.SetupGet(c => c.Users).ReturnsDbSet(testUsers);
 
             var repository = new LandmarkRepository(context.Object);
 
@@ -52,24 +71,27 @@ namespace LandmarkRemark.Repository.Tests.Landmarks
             // Set up the context and repository.
             var configuration = Mock.Of<IConfiguration>();
 
+            // Set up the test data.
             var landmarks = new List<Landmark>()
             {
                 new Landmark()
                 {
                     Notes = "Parliament House, Canberra",
                     Location = new Point(149.125241, -35.307003),
-                    UserId = 1
+                    UserId = 1,
+                    User = testUsers[0]
                 },
                 new Landmark()
                 {
                     Notes = "Parliament House, Brisbane",
                     Location = new Point(153.0252065, -27.4754275),
-                    UserId = 2
+                    UserId = 2,
+                    User = testUsers[1]
                 },
             };
 
             var context = new Mock<LandmarkRemarkContext>(configuration);
-            context.SetupGet(x => x.Landmarks).ReturnsDbSet(landmarks);
+            context.SetupGet(c => c.Landmarks).ReturnsDbSet(landmarks);
 
             var repository = new LandmarkRepository(context.Object);
 
@@ -97,18 +119,20 @@ namespace LandmarkRemark.Repository.Tests.Landmarks
                 {
                     Notes = "Parliament House, Canberra",
                     Location = new Point(149.125241, -35.307003),
-                    UserId = 2
+                    UserId = 2,
+                    User = testUsers[1]
                 },
                 new Landmark()
                 {
                     Notes = "Parliament House, Brisbane",
                     Location = new Point(153.0252065, -27.4754275),
-                    UserId = 2
+                    UserId = 2,
+                    User = testUsers[1]
                 },
             };
 
             var context = new Mock<LandmarkRemarkContext>(configuration);
-            context.SetupGet(x => x.Landmarks).ReturnsDbSet(landmarks);
+            context.SetupGet(c => c.Landmarks).ReturnsDbSet(landmarks);
 
             var repository = new LandmarkRepository(context.Object);
 
@@ -137,6 +161,7 @@ namespace LandmarkRemark.Repository.Tests.Landmarks
                     Notes = "Parliament House, Canberra",
                     Location = new Point(149.125241, -35.307003),
                     UserId = 1,
+                    User = testUsers[0],
                     Deleted = true
                 },
                 new Landmark()
@@ -144,12 +169,13 @@ namespace LandmarkRemark.Repository.Tests.Landmarks
                     Notes = "Parliament House, Brisbane",
                     Location = new Point(153.0252065, -27.4754275),
                     UserId = 2,
+                    User = testUsers[1],
                     Deleted = false
                 },
             };
 
             var context = new Mock<LandmarkRemarkContext>(configuration);
-            context.SetupGet(x => x.Landmarks).ReturnsDbSet(landmarks);
+            context.SetupGet(c => c.Landmarks).ReturnsDbSet(landmarks);
 
             var repository = new LandmarkRepository(context.Object);
 
@@ -178,18 +204,20 @@ namespace LandmarkRemark.Repository.Tests.Landmarks
                 {
                     Notes = "Parliament House, Canberra",
                     Location = new Point(149.125241, -35.307003),
-                    UserId = 1
+                    UserId = 1,
+                    User = testUsers[0]
                 },
                 new Landmark()
                 {
                     Notes = "Parliament House, Brisbane",
                     Location = new Point(153.0252065, -27.4754275),
-                    UserId = 2
+                    UserId = 2,
+                    User = testUsers[1]
                 },
             };
 
             var context = new Mock<LandmarkRemarkContext>(configuration);
-            context.SetupGet(x => x.Landmarks).ReturnsDbSet(landmarks);
+            context.SetupGet(c => c.Landmarks).ReturnsDbSet(landmarks);
 
             var repository = new LandmarkRepository(context.Object);
 
@@ -216,6 +244,7 @@ namespace LandmarkRemark.Repository.Tests.Landmarks
                     Notes = "Parliament House, Canberra",
                     Location = new Point(149.125241, -35.307003),
                     UserId = 1,
+                    User = testUsers[0],
                     Deleted = true
                 },
                 new Landmark()
@@ -223,12 +252,13 @@ namespace LandmarkRemark.Repository.Tests.Landmarks
                     Notes = "Parliament House, Brisbane",
                     Location = new Point(153.0252065, -27.4754275),
                     UserId = 2,
+                    User = testUsers[1],
                     Deleted = false
                 },
             };
 
             var context = new Mock<LandmarkRemarkContext>(configuration);
-            context.SetupGet(x => x.Landmarks).ReturnsDbSet(landmarks);
+            context.SetupGet(c => c.Landmarks).ReturnsDbSet(landmarks);
 
             var repository = new LandmarkRepository(context.Object);
 
