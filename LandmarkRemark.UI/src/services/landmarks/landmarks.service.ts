@@ -13,7 +13,7 @@ export class LandmarksService {
     }
 
     public async findByUserId(userId: number): Promise<LandmarkDTO[]> {
-        const url = `landmarks?userId=${userId}`;
+        const url = `landmarks/my-landmarks?userId=${userId}`;
 
         return this.httpService.get<LandmarkDTO[]>(url);
     }

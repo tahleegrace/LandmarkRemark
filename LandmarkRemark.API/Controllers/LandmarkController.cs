@@ -39,10 +39,20 @@ namespace LandmarkRemark.API.Controllers
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
         /// <returns>The landmarks for the specified user.</returns>
-        [HttpGet]
+        [HttpGet("my-landmarks")]
         public async Task<ActionResult<List<LandmarkDTO>>> FindByUserId(int userId)
         {
             return Ok(await this._landmarkService.FindByUserId(userId));
+        }
+
+        /// <summary>
+        /// Finds all landmarks.
+        /// </summary>
+        /// <returns>All landmarks.</returns>
+        [HttpGet]
+        public async Task<ActionResult<List<LandmarkDTO>>> FindAll()
+        {
+            return Ok(await this._landmarkService.FindAll());
         }
     }
 }

@@ -46,5 +46,14 @@ namespace LandmarkRemark.Repository.Landmarks
         {
             return await this._context.Landmarks.Where(l => l.UserId == userId && !l.Deleted).ToListAsync();
         }
+
+        /// <summary>
+        /// Returns all landmarks that have been added.
+        /// </summary>
+        /// <returns>All landmarks that have been added.</returns>
+        public async Task<List<Landmark>> FindAll()
+        {
+            return await this._context.Landmarks.Where(l => !l.Deleted).ToListAsync();
+        }
     }
 }

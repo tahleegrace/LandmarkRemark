@@ -84,5 +84,35 @@ namespace LandmarkRemark.API.Tests.Controllers
 
             Assert.AreEqual(mockLandmarkDTO, landmarks[0]);
         }
+
+        /// <summary>
+        /// Tests finding all landmarks.
+        /// </summary>
+        [Test]
+        public async Task TestFindAllWorksSuccessfully()
+        {
+            // Set up the controller and service.
+            var mockLandmarkDTO = new LandmarkDTO()
+            {
+                Notes = "This is a test",
+                Longitude = 149.125241,
+                Latitude = -35.307003
+            };
+
+            var service = new Mock<ILandmarkService>();
+            service.Setup(s => s.FindAll()).ReturnsAsync(new List<LandmarkDTO>() { mockLandmarkDTO });
+
+            var landmarkController = new LandmarkController(service.Object);
+
+            // Find the landmarks for the user.
+            var response = await landmarkController.FindAll();
+            var result = response.Result as OkObjectResult;
+            var landmarks = result.Value as List<LandmarkDTO>;
+
+            // Verify the correct DTO was returned.
+            service.Verify(s => s.FindAll());
+
+            Assert.AreEqual(mockLandmarkDTO, landmarks[0]);
+        }
     }
 }

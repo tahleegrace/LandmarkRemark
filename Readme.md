@@ -27,10 +27,6 @@ The token will be stored in memory in the React application and sent to all APIs
 
 The user ID in this token will be stored against the user ID field on the landmarks table.
 
-LND-5:
-------
-I will use EF Core with a search similar to LND-4, except without a supplied user ID. These will be displayed as per LND-4.
-
 LND-6:
 ------
 I will use SQL Server Full Text Search on the notes field of the Landmarks table. 

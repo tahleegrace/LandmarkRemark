@@ -20,5 +20,11 @@ namespace LandmarkRemark.Services.Landmarks
         /// <param name="userId">The ID of the user.</param>
         /// <returns>The landmarks for the specified user.</returns>
         Task<List<LandmarkDTO>> FindByUserId(int userId);
+
+        /// <summary>
+        /// Returns all landmarks that have been added.
+        /// </summary>
+        /// <returns>All landmarks that have been added.</returns>
+        Task<List<LandmarkDTO>> FindAll();
     }
 }

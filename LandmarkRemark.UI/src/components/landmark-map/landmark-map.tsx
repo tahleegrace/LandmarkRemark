@@ -1,6 +1,6 @@
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
 import { isNil } from "lodash";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import config from "../../config";
 import Map from "../map/map";
 import { CreateLandmarkRequest } from "../../interfaces/landmarks/create-landmark-request";

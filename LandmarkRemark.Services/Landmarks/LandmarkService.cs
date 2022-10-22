@@ -53,5 +53,17 @@ namespace LandmarkRemark.Services.Landmarks
             var result = this._mapper.Map<List<LandmarkDTO>>(landmarks);
             return result;
         }
+
+        /// <summary>
+        /// Returns all landmarks that have been added.
+        /// </summary>
+        /// <returns>All landmarks that have been added.</returns>
+        public async Task<List<LandmarkDTO>> FindAll()
+        {
+            var landmarks = await this._landmarkRepository.FindAll();
+
+            var result = this._mapper.Map<List<LandmarkDTO>>(landmarks);
+            return result;
+        }
     }
 }

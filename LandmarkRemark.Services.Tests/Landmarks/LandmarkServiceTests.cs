@@ -86,5 +86,42 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             Assert.AreEqual(landmarks[0].Location.X, result[0].Longitude);
             Assert.AreEqual(landmarks[0].Location.Y, result[0].Latitude);
         }
+
+        /// <summary>
+        /// Tests finding all landmarks.
+        /// </summary>
+        [Test]
+        public async Task TestFindAllWorksSuccessfully()
+        {
+            // Set up the repository, mapper and service.
+            var repository = new Mock<ILandmarkRepository>();
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<LandmarkMappingProfile>()).CreateMapper();
+            var landmarkService = new LandmarkService(repository.Object, mapper);
+
+            // Set up the test data.
+            var landmarks = new List<Landmark>()
+            {
+                new Landmark()
+                {
+                    Id = 1,
+                    Notes = "Parliament House, Canberra",
+                    Location = new Point(149.125241, -35.307003),
+                    UserId = 1
+                }
+            };
+
+            repository.Setup(r => r.FindAll()).ReturnsAsync(landmarks);
+
+            // Search for landmarks.
+            var result = await landmarkService.FindAll();
+
+            // Verify the correct landmark is returned.
+            repository.Verify(r => r.FindAll());
+
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(landmarks[0].Notes, result[0].Notes);
+            Assert.AreEqual(landmarks[0].Location.X, result[0].Longitude);
+            Assert.AreEqual(landmarks[0].Location.Y, result[0].Latitude);
+        }
     }
 }
