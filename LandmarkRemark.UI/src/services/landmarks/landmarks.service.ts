@@ -23,4 +23,10 @@ export class LandmarksService {
 
         return this.httpService.get<LandmarkDTO[]>(url);
     }
+
+    public async search(query: string): Promise<LandmarkDTO[]> {
+        const url = `landmarks/search?query=${query}`;
+
+        return this.httpService.get<LandmarkDTO[]>(url);
+    }
 }

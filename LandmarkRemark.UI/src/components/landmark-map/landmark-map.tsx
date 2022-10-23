@@ -16,6 +16,7 @@ const render = (status: Status) => {
 const noLandmarksVisibleView = '';
 const myLandmarksView = 'my-landmarks';
 const allLandmarksView = 'all-landmarks';
+const searchLandmarksView = 'search-landmarks';
 
 function LandmarkMap() {
     const landmarksService = new LandmarksService(); // TODO: Ideally this should be injected using a DI framework.
@@ -81,6 +82,17 @@ function LandmarkMap() {
         setLandmarks(result);
     };
 
+    const searchLandmarks = async () => {
+        const query = prompt("Enter your search query");
+
+        if (query && query.length > 0) {
+            const result = await landmarksService.search(query);
+
+            setCurrentView(searchLandmarksView);
+            setLandmarks(result);
+        }
+    };
+
     const hideLandmarks = async () => {
         setCurrentView(noLandmarksVisibleView);
         setLandmarks([]);
@@ -96,12 +108,13 @@ function LandmarkMap() {
             <div className="navigation">
                 <a href="#" onClick={showMyLandmarks} className={getNavigationLinkStyle(myLandmarksView)}>Show My Landmarks</a>
                 <a href="#" onClick={showAllLandmarks} className={getNavigationLinkStyle(allLandmarksView)}>Show All Landmarks</a>
+                <a href="#" onClick={searchLandmarks} className={getNavigationLinkStyle(searchLandmarksView)}>Search Landmarks</a>
                 <a href="#" onClick={hideLandmarks} className={getNavigationLinkStyle(noLandmarksVisibleView)}>Hide Landmarks</a>
             </div>
             <Wrapper apiKey={config.googleMaps.apiKey} render={render}>
                 <Map style={{ width: "1000px", height: "1000px" }} center={center} zoom={zoom} onClick={mapClicked}>
                     {landmarks.map((landmark, i) => (
-                        <Marker key={i} position={{ lat: landmark.latitude, lng: landmark.longitude }} title={`${landmark.notes} (Created By: ${landmark.userFullName})`}></Marker>
+                        <Marker key={i} position={{ lat: landmark.latitude, lng: landmark.longitude }} title={`${landmark.notes} (Created By ${landmark.userFullName})`}></Marker>
                     ))}
                 </Map>
             </Wrapper>
