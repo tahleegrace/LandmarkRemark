@@ -265,7 +265,49 @@ namespace LandmarkRemark.Repository.Tests.Landmarks
             // Search for landmarks.
             var result = await repository.FindAll();
 
-            // Make sure one landmarks is returned.
+            // Make sure one landmark is returned.
+            Assert.AreEqual(1, result.Count);
+        }
+
+        /// <summary>
+        /// Tests that searching for landmarks works correctly.
+        /// </summary>
+        [Test]
+        [Ignore("Cannot mock EF Core Full Text Search")]
+        public async Task TestSearchLandmarksWorksSuccessfully()
+        {
+            // Set up the context and repository.
+            var configuration = Mock.Of<IConfiguration>();
+
+            var landmarks = new List<Landmark>()
+            {
+                new Landmark()
+                {
+                    Notes = "Parliament House, Canberra",
+                    Location = new Point(149.125241, -35.307003),
+                    UserId = 1,
+                    User = testUsers[0],
+                    Deleted = true
+                },
+                new Landmark()
+                {
+                    Notes = "Parliament House, Brisbane",
+                    Location = new Point(153.0252065, -27.4754275),
+                    UserId = 2,
+                    User = testUsers[1],
+                    Deleted = false
+                },
+            };
+
+            var context = new Mock<LandmarkRemarkContext>(configuration);
+            context.SetupGet(c => c.Landmarks).ReturnsDbSet(landmarks);
+
+            var repository = new LandmarkRepository(context.Object);
+
+            // Search for landmarks.
+            var result = await repository.Search("Brisbane");
+
+            // Make sure one landmark is returned.
             Assert.AreEqual(1, result.Count);
         }
     }

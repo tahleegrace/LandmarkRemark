@@ -65,5 +65,18 @@ namespace LandmarkRemark.Services.Landmarks
             var result = this._mapper.Map<List<LandmarkDTO>>(landmarks);
             return result;
         }
+
+        /// <summary>
+        /// Finds the landmarks matching the specified search query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns>The landmarks matching the specified search query.</returns>
+        public async Task<List<LandmarkDTO>> Search(string query)
+        {
+            var landmarks = await this._landmarkRepository.Search(query);
+
+            var result = this._mapper.Map<List<LandmarkDTO>>(landmarks);
+            return result;
+        }
     }
 }

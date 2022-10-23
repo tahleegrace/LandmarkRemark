@@ -34,7 +34,7 @@ namespace LandmarkRemark.API.Tests.Controllers
             // Set up the test data.
             var request = new CreateLandmarkRequest()
             {
-                // Parliament Houe, Canberra.
+                // Parliament House, Canberra.
                 Notes = "This is a test",
                 Longitude = 149.125241,
                 Latitude = -35.307003,
@@ -114,6 +114,37 @@ namespace LandmarkRemark.API.Tests.Controllers
 
             // Verify the correct DTO was returned.
             service.Verify(s => s.FindAll());
+
+            Assert.AreEqual(mockLandmarkDTO, landmarks[0]);
+        }
+
+        /// <summary>
+        /// Tests searching for landmarks.
+        /// </summary>
+        [Test]
+        public async Task TestSearchWorksSuccessfully()
+        {
+            // Set up the controller and service.
+            var mockLandmarkDTO = new LandmarkDTO()
+            {
+                Notes = "This is a test",
+                Longitude = 149.125241,
+                Latitude = -35.307003,
+                UserFullName = "Anthony Albanese"
+            };
+
+            var service = new Mock<ILandmarkService>();
+            service.Setup(s => s.Search(It.IsAny<string>())).ReturnsAsync(new List<LandmarkDTO>() { mockLandmarkDTO });
+
+            var landmarkController = new LandmarkController(service.Object);
+
+            // Find the landmarks for the user.
+            var response = await landmarkController.Search("test");
+            var result = response.Result as OkObjectResult;
+            var landmarks = result.Value as List<LandmarkDTO>;
+
+            // Verify the correct DTO was returned.
+            service.Verify(s => s.Search("test"));
 
             Assert.AreEqual(mockLandmarkDTO, landmarks[0]);
         }

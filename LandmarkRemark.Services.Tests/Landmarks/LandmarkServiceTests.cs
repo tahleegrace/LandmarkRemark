@@ -158,5 +158,44 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             Assert.AreEqual(landmarks[0].Location.Y, result[0].Latitude);
             Assert.AreEqual("Anthony Albanese", result[0].UserFullName);
         }
+
+        /// <summary>
+        /// Tests searching for landmarks
+        /// </summary>
+        [Test]
+        public async Task TestSearchWorksSuccessfully()
+        {
+            // Set up the repository, mapper and service.
+            var repository = new Mock<ILandmarkRepository>();
+            var mapper = new MapperConfiguration(config => config.AddProfile<LandmarkMappingProfile>()).CreateMapper();
+            var landmarkService = new LandmarkService(repository.Object, mapper);
+
+            // Set up the test data.
+            var landmarks = new List<Landmark>()
+            {
+                new Landmark()
+                {
+                    Id = 1,
+                    Notes = "Parliament House, Canberra",
+                    Location = new Point(149.125241, -35.307003),
+                    UserId = 1,
+                    User = testUsers[0]
+                }
+            };
+
+            repository.Setup(r => r.Search(It.IsAny<string>())).ReturnsAsync(landmarks);
+
+            // Search for landmarks.
+            var result = await landmarkService.Search("Canberra");
+
+            // Verify the correct landmark is returned.
+            repository.Verify(r => r.Search("Canberra"));
+
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(landmarks[0].Notes, result[0].Notes);
+            Assert.AreEqual(landmarks[0].Location.X, result[0].Longitude);
+            Assert.AreEqual(landmarks[0].Location.Y, result[0].Latitude);
+            Assert.AreEqual("Anthony Albanese", result[0].UserFullName);
+        }
     }
 }

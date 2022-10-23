@@ -26,5 +26,12 @@ namespace LandmarkRemark.Services.Landmarks
         /// </summary>
         /// <returns>All landmarks that have been added.</returns>
         Task<List<LandmarkDTO>> FindAll();
+
+        /// <summary>
+        /// Finds the landmarks matching the specified search query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns>The landmarks matching the specified search query.</returns>
+        Task<List<LandmarkDTO>> Search(string query);
     }
 }

@@ -65,5 +65,17 @@ namespace LandmarkRemark.Repository.Landmarks
                                                 .Where(l => !l.Deleted)
                                                 .ToListAsync();
         }
+
+        /// <summary>
+        /// Finds the landmarks matching the specified search query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns>The landmarks matching the specified search query.</returns>
+        public async Task<List<Landmark>> Search(string query)
+        {
+            return await this._context.Landmarks.Include(l => l.User)
+                                                .Where(l => !l.Deleted && EF.Functions.FreeText(l.Notes, query))
+                                                .ToListAsync();
+        }
     }
 }

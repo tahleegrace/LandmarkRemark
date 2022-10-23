@@ -54,5 +54,16 @@ namespace LandmarkRemark.API.Controllers
         {
             return Ok(await this._landmarkService.FindAll());
         }
+
+        /// <summary>
+        /// Finds the landmarks matching the specified search query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns>The landmarks matching the specified search query.</returns>
+        [HttpGet("search")]
+        public async Task<ActionResult<List<LandmarkDTO>>> Search(string query)
+        {
+            return Ok(await this._landmarkService.Search(query));
+        }
     }
 }
