@@ -33,6 +33,8 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             }
         };
 
+        private const int CurrentUserId = 1;
+
         /// <summary>
         /// Tests creating a new landmark.
         /// </summary>
@@ -59,19 +61,17 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             // Set up the test data.
             var request = new CreateLandmarkRequest()
             {
-                // Parliament Houe, Canberra.
                 Notes = "Parliament House, Canberra",
                 Longitude = 149.125241,
-                Latitude = -35.307003,
-                UserId = 1
+                Latitude = -35.307003
             };
 
             // Create the landmark.
-            var result = await landmarkService.Create(request);
+            var result = await landmarkService.Create(request, CurrentUserId);
 
             // Verify a new landmark was created.
             repository.Verify(r => r.Create(It.Is<Landmark>(l => l.Notes == request.Notes && l.Location.X == request.Longitude
-                && l.Location.Y == request.Latitude && l.Location.SRID == 4326 && l.UserId == request.UserId)));
+                && l.Location.Y == request.Latitude && l.Location.SRID == 4326 && l.UserId == CurrentUserId)));
 
             // Verify the correct DTO is returned.
             Assert.AreEqual(request.Notes, result.Notes);
@@ -94,7 +94,7 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             // Create the landmark.
             Assert.ThrowsAsync<LandmarkNotProvidedException>(async () =>
             {
-                await landmarkService.Create(null);
+                await landmarkService.Create(null, CurrentUserId);
             });
         }
 

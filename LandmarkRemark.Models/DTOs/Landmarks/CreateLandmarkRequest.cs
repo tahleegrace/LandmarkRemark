@@ -19,11 +19,5 @@
         /// Gets or sets the notes about the landmark.
         /// </summary>
         public string Notes { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ID of the user who created the landmark.
-        /// </summary>
-        // TODO: This should be worked out based on who is currently logged in.
-        public int UserId { get; set; }
     }
 }

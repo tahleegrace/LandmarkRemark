@@ -21,7 +21,7 @@ namespace LandmarkRemark.API.Tests.Controllers
         /// Tests creating a new landmark.
         /// </summary>
         [Test]
-        public async Task TestCreateLandmarkWorksSuccessfully()
+        public async Task TestCreateLandmarkWorksSuccessfullyWhenUserIsLoggedIn()
         {
             // Set up the controller and services.
             var mockLandmarkDTO = new LandmarkDTO()
@@ -33,7 +33,7 @@ namespace LandmarkRemark.API.Tests.Controllers
             };
 
             var landmarkService = new Mock<ILandmarkService>();
-            landmarkService.Setup(s => s.Create(It.IsAny<CreateLandmarkRequest>())).ReturnsAsync(mockLandmarkDTO);
+            landmarkService.Setup(s => s.Create(It.IsAny<CreateLandmarkRequest>(), It.IsAny<int>())).ReturnsAsync(mockLandmarkDTO);
 
             var authenticationService = new Mock<IAuthenticationService>();
             authenticationService.Setup(s => s.GetCurrentUserId(It.IsAny<ClaimsPrincipal>())).Returns(CurrentUserId);
@@ -46,17 +46,16 @@ namespace LandmarkRemark.API.Tests.Controllers
                 // Parliament House, Canberra.
                 Notes = "This is a test",
                 Longitude = 149.125241,
-                Latitude = -35.307003,
-                UserId = 1
+                Latitude = -35.307003
             };
 
             // Create the landmark.
             var response = await landmarkController.Create(request);
             var result = response.Result as OkObjectResult;
             var newLandmark = result.Value as LandmarkDTO;
-            
+
             // Verify a new landmark was created.
-            landmarkService.Verify(s => s.Create(It.Is<CreateLandmarkRequest>(l => l == request)));
+            landmarkService.Verify(s => s.Create(It.Is<CreateLandmarkRequest>(l => l == request), It.Is<int>(id => id == CurrentUserId)));
 
             // Verify the correct DTO was returned.
             Assert.AreEqual(StatusCodes.Status200OK, result.StatusCode);
@@ -71,7 +70,7 @@ namespace LandmarkRemark.API.Tests.Controllers
         {
             // Set up the controller and services.
             var landmarkService = new Mock<ILandmarkService>();
-            landmarkService.Setup(s => s.Create(It.IsAny<CreateLandmarkRequest>())).ThrowsAsync(new LandmarkNotProvidedException());
+            landmarkService.Setup(s => s.Create(It.IsAny<CreateLandmarkRequest>(), It.IsAny<int>())).ThrowsAsync(new LandmarkNotProvidedException());
 
             var authenticationService = new Mock<IAuthenticationService>();
             authenticationService.Setup(s => s.GetCurrentUserId(It.IsAny<ClaimsPrincipal>())).Returns(CurrentUserId);
@@ -84,6 +83,7 @@ namespace LandmarkRemark.API.Tests.Controllers
 
             // Verify the correct DTO was returned.
             Assert.AreEqual(StatusCodes.Status400BadRequest, result.StatusCode);
+            Assert.AreEqual("Please provide a landmark to create.", result.Value);
         }
 
         /// <summary>

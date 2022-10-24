@@ -30,8 +30,9 @@ namespace LandmarkRemark.Services.Landmarks
         /// Creates a new landmark.
         /// </summary>
         /// <param name="request">The landmark.</param>
+        /// <param name="currentUserId">The ID of the current user.</param>
         /// <returns>The newly created landmark.</returns>
-        public async Task<LandmarkDTO> Create(CreateLandmarkRequest request)
+        public async Task<LandmarkDTO> Create(CreateLandmarkRequest request, int currentUserId)
         {
             if (request == null)
             {
@@ -39,6 +40,7 @@ namespace LandmarkRemark.Services.Landmarks
             }
 
             var newLandmark = this._mapper.Map<Landmark>(request);
+            newLandmark.UserId = currentUserId;
             newLandmark = await this._landmarkRepository.Create(newLandmark);
 
             var result = this._mapper.Map<LandmarkDTO>(newLandmark);
@@ -48,7 +50,7 @@ namespace LandmarkRemark.Services.Landmarks
         /// <summary>
         /// Finds the landmarks for the current user.
         /// </summary>
-        /// <param name="currentUserId">The ID of the user.</param>
+        /// <param name="currentUserId">The ID of the current user.</param>
         /// <returns>The landmarks for the current user.</returns>
         public async Task<List<LandmarkDTO>> FindMyLandmarks(int currentUserId)
         {

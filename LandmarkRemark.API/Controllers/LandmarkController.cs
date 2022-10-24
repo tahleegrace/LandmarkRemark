@@ -40,7 +40,16 @@ namespace LandmarkRemark.API.Controllers
         {
             try
             {
-                return Ok(await this._landmarkService.Create(request));
+                var currentUserId = this._authenticationService.GetCurrentUserId(User);
+
+                if (currentUserId != null)
+                {
+                    return Ok(await this._landmarkService.Create(request, currentUserId.Value));
+                }
+                else
+                {
+                    return Unauthorized();
+                }
             }
             catch (LandmarkNotProvidedException)
             {

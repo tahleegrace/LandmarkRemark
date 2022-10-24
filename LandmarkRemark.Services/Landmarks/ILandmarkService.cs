@@ -11,13 +11,14 @@ namespace LandmarkRemark.Services.Landmarks
         /// Creates a new landmark.
         /// </summary>
         /// <param name="request">The landmark.</param>
+        /// <param name="currentUserId">The ID of the current user.</param>
         /// <returns>The newly created landmark.</returns>
-        Task<LandmarkDTO> Create(CreateLandmarkRequest request);
+        Task<LandmarkDTO> Create(CreateLandmarkRequest request, int currentUserId);
 
         /// <summary>
         /// Finds the landmarks for the current user.
         /// </summary>
-        /// <param name="currentUserId">The ID of the user.</param>
+        /// <param name="currentUserId">The ID of the current user.</param>
         /// <returns>The landmarks for the current user.</returns>
         Task<List<LandmarkDTO>> FindMyLandmarks(int currentUserId);
 
