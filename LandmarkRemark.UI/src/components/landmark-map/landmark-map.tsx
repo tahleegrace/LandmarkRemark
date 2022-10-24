@@ -5,9 +5,10 @@ import config from "../../config";
 import Map from "../map/map";
 import "./landmark-map.scss";
 import { CreateLandmarkRequest } from "../../interfaces/landmarks/create-landmark-request";
-import { LandmarksService } from "../../services/landmarks/landmarks.service";
+import { ILandmarksService } from "../../services/landmarks/landmarks.service";
 import { LandmarkDTO } from "../../interfaces/landmarks/landmark-dto";
 import Marker from "../marker/marker";
+import { container } from "../../ioc";
 
 const render = (status: Status) => {
     return <h1>{status}</h1>;
@@ -19,7 +20,7 @@ const allLandmarksView = 'all-landmarks';
 const searchLandmarksView = 'search-landmarks';
 
 function LandmarkMap() {
-    const landmarksService = new LandmarksService(); // TODO: Ideally this should be injected using a DI framework.
+    const landmarksService = container.get<ILandmarksService>("landmarks-service");
 
     // Create the initial zoom level and center state.
     const [zoom] = useState(10);

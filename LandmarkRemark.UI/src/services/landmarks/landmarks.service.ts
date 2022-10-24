@@ -1,10 +1,19 @@
+import { injectable } from "inversify";
 import { CreateLandmarkRequest } from "../../interfaces/landmarks/create-landmark-request";
 import { LandmarkDTO } from "../../interfaces/landmarks/landmark-dto";
-import { HttpService } from "../http/http.service";
+import { container } from "../../ioc";
+import { IHttpService } from "../http/http.service";
 
-// TODO: This should be injected into React components using a DI framework.
+export interface ILandmarksService {
+    create(request: CreateLandmarkRequest): Promise<LandmarkDTO>;
+    findByUserId(userId: number): Promise<LandmarkDTO[]>;
+    findAll(): Promise<LandmarkDTO[]>;
+    search(query: string): Promise<LandmarkDTO[]>;
+}
+
+@injectable()
 export class LandmarksService {
-    private httpService = new HttpService(); // TODO: Ideally this should be injected using a DI framework.
+    private readonly httpService: IHttpService = container.get<IHttpService>('http-service');
 
     public async create(request: CreateLandmarkRequest): Promise<LandmarkDTO> {
         const url = 'landmarks';
