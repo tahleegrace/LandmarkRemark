@@ -46,13 +46,13 @@ namespace LandmarkRemark.Services.Landmarks
         }
 
         /// <summary>
-        /// Finds the landmarks for the specified user.
+        /// Finds the landmarks for the current user.
         /// </summary>
-        /// <param name="userId">The ID of the user.</param>
-        /// <returns>The landmarks for the specified user.</returns>
-        public async Task<List<LandmarkDTO>> FindByUserId(int userId)
+        /// <param name="currentUserId">The ID of the user.</param>
+        /// <returns>The landmarks for the current user.</returns>
+        public async Task<List<LandmarkDTO>> FindMyLandmarks(int currentUserId)
         {
-            var landmarks = await this._landmarkRepository.FindByUserId(userId);
+            var landmarks = await this._landmarkRepository.FindByUserId(currentUserId);
             
             var result = this._mapper.Map<List<LandmarkDTO>>(landmarks);
             return result;

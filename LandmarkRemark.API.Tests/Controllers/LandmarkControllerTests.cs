@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 
 using LandmarkRemark.API.Controllers;
 using LandmarkRemark.Models.DTOs.Landmarks;
 using LandmarkRemark.Models.Exceptions.Landmarks;
+using LandmarkRemark.Services.Authentication;
 using LandmarkRemark.Services.Landmarks;
 
 namespace LandmarkRemark.API.Tests.Controllers
@@ -12,13 +15,15 @@ namespace LandmarkRemark.API.Tests.Controllers
     [TestFixture]
     public class LandmarkControllerTests
     {
+        private const int CurrentUserId = 1;
+
         /// <summary>
         /// Tests creating a new landmark.
         /// </summary>
         [Test]
         public async Task TestCreateLandmarkWorksSuccessfully()
         {
-            // Set up the controller and service.
+            // Set up the controller and services.
             var mockLandmarkDTO = new LandmarkDTO()
             {
                 Notes = "This is a test",
@@ -27,10 +32,13 @@ namespace LandmarkRemark.API.Tests.Controllers
                 UserFullName = "Anthony Albanese"
             };
 
-            var service = new Mock<ILandmarkService>();
-            service.Setup(s => s.Create(It.IsAny<CreateLandmarkRequest>())).ReturnsAsync(mockLandmarkDTO);
+            var landmarkService = new Mock<ILandmarkService>();
+            landmarkService.Setup(s => s.Create(It.IsAny<CreateLandmarkRequest>())).ReturnsAsync(mockLandmarkDTO);
 
-            var landmarkController = new LandmarkController(service.Object);
+            var authenticationService = new Mock<IAuthenticationService>();
+            authenticationService.Setup(s => s.GetCurrentUserId(It.IsAny<ClaimsPrincipal>())).Returns(CurrentUserId);
+
+            var landmarkController = new LandmarkController(authenticationService.Object, landmarkService.Object);
 
             // Set up the test data.
             var request = new CreateLandmarkRequest()
@@ -48,7 +56,7 @@ namespace LandmarkRemark.API.Tests.Controllers
             var newLandmark = result.Value as LandmarkDTO;
             
             // Verify a new landmark was created.
-            service.Verify(s => s.Create(It.Is<CreateLandmarkRequest>(l => l == request)));
+            landmarkService.Verify(s => s.Create(It.Is<CreateLandmarkRequest>(l => l == request)));
 
             // Verify the correct DTO was returned.
             Assert.AreEqual(StatusCodes.Status200OK, result.StatusCode);
@@ -61,11 +69,14 @@ namespace LandmarkRemark.API.Tests.Controllers
         [Test]
         public async Task TestCreateLandmarkThrowsExceptionWhenLandmarkNotProvided()
         {
-            // Set up the controller and service.
-            var service = new Mock<ILandmarkService>();
-            service.Setup(s => s.Create(It.IsAny<CreateLandmarkRequest>())).ThrowsAsync(new LandmarkNotProvidedException());
+            // Set up the controller and services.
+            var landmarkService = new Mock<ILandmarkService>();
+            landmarkService.Setup(s => s.Create(It.IsAny<CreateLandmarkRequest>())).ThrowsAsync(new LandmarkNotProvidedException());
 
-            var landmarkController = new LandmarkController(service.Object);
+            var authenticationService = new Mock<IAuthenticationService>();
+            authenticationService.Setup(s => s.GetCurrentUserId(It.IsAny<ClaimsPrincipal>())).Returns(CurrentUserId);
+
+            var landmarkController = new LandmarkController(authenticationService.Object, landmarkService.Object);
 
             // Create the landmark.
             var response = await landmarkController.Create(null);
@@ -76,12 +87,12 @@ namespace LandmarkRemark.API.Tests.Controllers
         }
 
         /// <summary>
-        /// Tests finding landmarks by user ID.
+        /// Tests finding the landmarks for the current user.
         /// </summary>
         [Test]
-        public async Task TestFindByUserIdWorksSuccessfully()
+        public async Task TestFindMyLandmarksWorksSuccessfullyWhenUserIsLoggedIn()
         {
-            // Set up the controller and service.
+            // Set up the controller and services.
             var mockLandmarkDTO = new LandmarkDTO()
             {
                 Notes = "This is a test",
@@ -90,20 +101,21 @@ namespace LandmarkRemark.API.Tests.Controllers
                 UserFullName = "Anthony Albanese"
             };
 
-            var service = new Mock<ILandmarkService>();
-            service.Setup(s => s.FindByUserId(It.IsAny<int>())).ReturnsAsync(new List<LandmarkDTO>() { mockLandmarkDTO });
+            var landmarkService = new Mock<ILandmarkService>();
+            landmarkService.Setup(s => s.FindMyLandmarks(It.IsAny<int>())).ReturnsAsync(new List<LandmarkDTO>() { mockLandmarkDTO });
 
-            var landmarkController = new LandmarkController(service.Object);
+            var authenticationService = new Mock<IAuthenticationService>();
+            authenticationService.Setup(s => s.GetCurrentUserId(It.IsAny<ClaimsPrincipal>())).Returns(CurrentUserId);
+
+            var landmarkController = new LandmarkController(authenticationService.Object, landmarkService.Object);
 
             // Find the landmarks for the user.
-            int userId = 1;
-
-            var response = await landmarkController.FindByUserId(userId);
+            var response = await landmarkController.FindMyLandmarks();
             var result = response.Result as OkObjectResult;
             var landmarks = result.Value as List<LandmarkDTO>;
 
             // Verify the correct DTO was returned.
-            service.Verify(s => s.FindByUserId(userId));
+            landmarkService.Verify(s => s.FindMyLandmarks(CurrentUserId));
 
             Assert.AreEqual(mockLandmarkDTO, landmarks[0]);
         }
@@ -114,7 +126,7 @@ namespace LandmarkRemark.API.Tests.Controllers
         [Test]
         public async Task TestFindAllWorksSuccessfully()
         {
-            // Set up the controller and service.
+            // Set up the controller and services.
             var mockLandmarkDTO = new LandmarkDTO()
             {
                 Notes = "This is a test",
@@ -123,10 +135,13 @@ namespace LandmarkRemark.API.Tests.Controllers
                 UserFullName = "Anthony Albanese"
             };
 
-            var service = new Mock<ILandmarkService>();
-            service.Setup(s => s.FindAll()).ReturnsAsync(new List<LandmarkDTO>() { mockLandmarkDTO });
+            var landmarkService = new Mock<ILandmarkService>();
+            landmarkService.Setup(s => s.FindAll()).ReturnsAsync(new List<LandmarkDTO>() { mockLandmarkDTO });
 
-            var landmarkController = new LandmarkController(service.Object);
+            var authenticationService = new Mock<IAuthenticationService>();
+            authenticationService.Setup(s => s.GetCurrentUserId(It.IsAny<ClaimsPrincipal>())).Returns(CurrentUserId);
+
+            var landmarkController = new LandmarkController(authenticationService.Object, landmarkService.Object);
 
             // Find the landmarks for the user.
             var response = await landmarkController.FindAll();
@@ -134,7 +149,7 @@ namespace LandmarkRemark.API.Tests.Controllers
             var landmarks = result.Value as List<LandmarkDTO>;
 
             // Verify the correct DTO was returned.
-            service.Verify(s => s.FindAll());
+            landmarkService.Verify(s => s.FindAll());
 
             Assert.AreEqual(mockLandmarkDTO, landmarks[0]);
         }
@@ -145,7 +160,7 @@ namespace LandmarkRemark.API.Tests.Controllers
         [Test]
         public async Task TestSearchWorksSuccessfully()
         {
-            // Set up the controller and service.
+            // Set up the controller and services.
             var mockLandmarkDTO = new LandmarkDTO()
             {
                 Notes = "This is a test",
@@ -154,10 +169,13 @@ namespace LandmarkRemark.API.Tests.Controllers
                 UserFullName = "Anthony Albanese"
             };
 
-            var service = new Mock<ILandmarkService>();
-            service.Setup(s => s.Search(It.IsAny<string>())).ReturnsAsync(new List<LandmarkDTO>() { mockLandmarkDTO });
+            var landmarkService = new Mock<ILandmarkService>();
+            landmarkService.Setup(s => s.Search(It.IsAny<string>())).ReturnsAsync(new List<LandmarkDTO>() { mockLandmarkDTO });
 
-            var landmarkController = new LandmarkController(service.Object);
+            var authenticationService = new Mock<IAuthenticationService>();
+            authenticationService.Setup(s => s.GetCurrentUserId(It.IsAny<ClaimsPrincipal>())).Returns(CurrentUserId);
+
+            var landmarkController = new LandmarkController(authenticationService.Object, landmarkService.Object);
 
             // Find the landmarks for the user.
             var response = await landmarkController.Search("test");
@@ -165,7 +183,7 @@ namespace LandmarkRemark.API.Tests.Controllers
             var landmarks = result.Value as List<LandmarkDTO>;
 
             // Verify the correct DTO was returned.
-            service.Verify(s => s.Search("test"));
+            landmarkService.Verify(s => s.Search("test"));
 
             Assert.AreEqual(mockLandmarkDTO, landmarks[0]);
         }

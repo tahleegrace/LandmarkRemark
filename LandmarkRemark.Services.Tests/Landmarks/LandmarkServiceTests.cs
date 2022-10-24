@@ -127,7 +127,7 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             // Search for landmarks.
             int userId = 1;
 
-            var result = await landmarkService.FindByUserId(userId);
+            var result = await landmarkService.FindMyLandmarks(userId);
 
             // Verify the correct landmark is returned.
             repository.Verify(r => r.FindByUserId(userId));

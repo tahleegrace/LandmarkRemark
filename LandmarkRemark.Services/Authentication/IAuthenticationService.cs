@@ -1,4 +1,6 @@
-﻿using LandmarkRemark.Models.DTOs.Authentication;
+﻿using System.Security.Claims;
+
+using LandmarkRemark.Models.DTOs.Authentication;
 
 namespace LandmarkRemark.Services.Authentication
 {
@@ -13,5 +15,12 @@ namespace LandmarkRemark.Services.Authentication
         /// <param name="loginDetails">The login details of the user.</param>
         /// <returns>The auth token.</returns>
         Task<AuthTokenDTO?> GenerateAuthToken(LoginDetailsDTO loginDetails);
+
+        /// <summary>
+        /// Gets the ID of the currently logged in user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>The ID of the currently logged in user.</returns>
+        int? GetCurrentUserId(ClaimsPrincipal user);
     }
 }

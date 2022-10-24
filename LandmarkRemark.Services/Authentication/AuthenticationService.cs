@@ -1,4 +1,6 @@
-﻿using LandmarkRemark.Models.DTOs.Authentication;
+﻿using System.Security.Claims;
+
+using LandmarkRemark.Models.DTOs.Authentication;
 using LandmarkRemark.Models.Exceptions.Authentication;
 using LandmarkRemark.Repository.Users;
 
@@ -41,6 +43,23 @@ namespace LandmarkRemark.Services.Authentication
             }
 
             return this._tokenService.Generate(user);
+        }
+
+        /// <summary>
+        /// Gets the ID of the currently logged in user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>The ID of the currently logged in user.</returns>
+        public int? GetCurrentUserId(ClaimsPrincipal user)
+        {
+            if (user == null)
+            {
+                return null;
+            }
+
+            var nameIdentifier = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return nameIdentifier != null ? int.Parse(nameIdentifier) : null;
         }
     }
 }

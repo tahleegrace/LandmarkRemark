@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using LandmarkRemark.Models.DTOs.Landmarks;
 using LandmarkRemark.Models.Exceptions.Landmarks;
 using LandmarkRemark.Services.Landmarks;
+using LandmarkRemark.Services.Authentication;
 
 namespace LandmarkRemark.API.Controllers
 {
@@ -11,16 +13,20 @@ namespace LandmarkRemark.API.Controllers
     /// </summary>
     [Route("api/landmarks")]
     [ApiController]
+    [Authorize]
     public class LandmarkController : ControllerBase
     {
+        private readonly IAuthenticationService _authenticationService;
         private readonly ILandmarkService _landmarkService;
 
         /// <summary>
         /// Creates a new instance of LandmarkController.
         /// </summary>
+        /// <param name="authenticationService">The authentication service.</param>
         /// <param name="landmarkService">The landmark service.</param>
-        public LandmarkController(ILandmarkService landmarkService)
+        public LandmarkController(IAuthenticationService authenticationService, ILandmarkService landmarkService)
         {
+            this._authenticationService = authenticationService;
             this._landmarkService = landmarkService;
         }
 
@@ -45,12 +51,20 @@ namespace LandmarkRemark.API.Controllers
         /// <summary>
         /// Finds the landmarks for the specified user.
         /// </summary>
-        /// <param name="userId">The ID of the user.</param>
         /// <returns>The landmarks for the specified user.</returns>
         [HttpGet("my-landmarks")]
-        public async Task<ActionResult<List<LandmarkDTO>>> FindByUserId(int userId)
+        public async Task<ActionResult<List<LandmarkDTO>>> FindMyLandmarks()
         {
-            return Ok(await this._landmarkService.FindByUserId(userId));
+            var currentUserId = this._authenticationService.GetCurrentUserId(User);
+
+            if (currentUserId != null)
+            {
+                return Ok(await this._landmarkService.FindMyLandmarks(currentUserId.Value));
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
 
         /// <summary>

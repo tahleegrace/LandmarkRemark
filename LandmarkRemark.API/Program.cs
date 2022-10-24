@@ -2,6 +2,7 @@ using LandmarkRemark.Entities;
 using LandmarkRemark.Mappings;
 using LandmarkRemark.Repository;
 using LandmarkRemark.Services;
+using LandmarkRemark.Services.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddBearerAuthentication(builder.Configuration);
+builder.Services.AddBearerAuthentication(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(MappingsSetup).Assembly);
 builder.Services.AddDbContext<LandmarkRemarkContext>();
 builder.Services.AddLandmarkRemarkRepositories();

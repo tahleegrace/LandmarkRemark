@@ -44,8 +44,7 @@ namespace LandmarkRemark.Services.Authentication
                 .AddClaims(claims)
                 .Build();
 
-            string accessToken = new JwtSecurityTokenHandler()
-                .WriteToken(token);
+            string accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
             return new AuthTokenDTO()
             {
