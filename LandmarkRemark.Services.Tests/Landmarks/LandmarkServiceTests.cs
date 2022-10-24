@@ -53,7 +53,7 @@ namespace LandmarkRemark.Services.Tests.Landmarks
                     Id = 1,
                     Notes = "Parliament House, Canberra",
                     Location = new Point(149.125241, -35.307003),
-                    UserId = 1,
+                    UserId = CurrentUserId,
                     User = testUsers[0]
                 }
             );
@@ -99,10 +99,10 @@ namespace LandmarkRemark.Services.Tests.Landmarks
         }
 
         /// <summary>
-        /// Tests finding landmarks by user ID.
+        /// Tests finding the landmarks for the current user.
         /// </summary>
         [Test]
-        public async Task TestFindByUserIdWorksSuccessfully()
+        public async Task TestFindMyLandmarksWorksSuccessfully()
         {
             // Set up the repository, mapper and service.
             var repository = new Mock<ILandmarkRepository>();
@@ -117,7 +117,7 @@ namespace LandmarkRemark.Services.Tests.Landmarks
                     Id = 1,
                     Notes = "Parliament House, Canberra",
                     Location = new Point(149.125241, -35.307003),
-                    UserId = 1,
+                    UserId = CurrentUserId,
                     User = testUsers[0]
                 }
             };
@@ -125,12 +125,10 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             repository.Setup(r => r.FindByUserId(It.IsAny<int>())).ReturnsAsync(landmarks);
 
             // Search for landmarks.
-            int userId = 1;
-
-            var result = await landmarkService.FindMyLandmarks(userId);
+            var result = await landmarkService.FindMyLandmarks(CurrentUserId);
 
             // Verify the correct landmark is returned.
-            repository.Verify(r => r.FindByUserId(userId));
+            repository.Verify(r => r.FindByUserId(CurrentUserId));
 
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(landmarks[0].Notes, result[0].Notes);
