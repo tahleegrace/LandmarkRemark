@@ -6,7 +6,7 @@ import { IHttpService } from "../http/http.service";
 
 export interface ILandmarksService {
     create(request: CreateLandmarkRequest): Promise<LandmarkDTO>;
-    findByUserId(userId: number): Promise<LandmarkDTO[]>;
+    findMyLandmarks(): Promise<LandmarkDTO[]>;
     findAll(): Promise<LandmarkDTO[]>;
     search(query: string): Promise<LandmarkDTO[]>;
 }
@@ -21,8 +21,8 @@ export class LandmarksService {
         return this.httpService.post<CreateLandmarkRequest, LandmarkDTO>(url, request);
     }
 
-    public async findByUserId(userId: number): Promise<LandmarkDTO[]> {
-        const url = `landmarks/my-landmarks?userId=${userId}`;
+    public async findMyLandmarks(): Promise<LandmarkDTO[]> {
+        const url = `landmarks/my-landmarks`;
 
         return this.httpService.get<LandmarkDTO[]>(url);
     }

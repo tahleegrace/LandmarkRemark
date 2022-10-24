@@ -29,7 +29,7 @@ namespace LandmarkRemark.API.Controllers
         /// </summary>
         /// <param name="loginDetails">The login details of the user.</param>
         /// <returns>The auth token.</returns>
-        [HttpPost]
+        [HttpPost("token")]
         public async Task<ActionResult<AuthTokenDTO>> GenerateAuthToken(LoginDetailsDTO loginDetails)
         {
             if (loginDetails == null)

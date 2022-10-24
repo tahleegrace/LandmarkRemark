@@ -10,9 +10,17 @@ export interface IHttpService {
 @injectable()
 export class HttpService implements IHttpService {
     getHeaders(): HttpHeaders {
-        return {
+        const headers: HttpHeaders = {
             'Content-Type': 'application/json'
+        };
+
+        const authToken = sessionStorage.getItem("auth-token");
+
+        if (authToken) {
+            headers['Authorization'] = `Bearer ${JSON.parse(authToken).token}`;
         }
+
+        return headers;
     }
 
     public async post<BodyType, ReturnType>(url: string, body: BodyType): Promise<ReturnType> {
