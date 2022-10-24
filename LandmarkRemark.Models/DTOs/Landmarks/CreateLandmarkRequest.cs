@@ -1,4 +1,4 @@
-﻿namespace LandmarkRemark.Models.Landmarks
+﻿namespace LandmarkRemark.Models.DTOs.Landmarks 
 {
     /// <summary>
     /// A request for creating a new landmark.

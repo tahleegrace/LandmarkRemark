@@ -3,7 +3,7 @@ using Moq;
 using NUnit.Framework;
 
 using LandmarkRemark.API.Controllers;
-using LandmarkRemark.Models.Landmarks;
+using LandmarkRemark.Models.DTOs.Landmarks;
 using LandmarkRemark.Services.Landmarks;
 
 namespace LandmarkRemark.API.Tests.Controllers

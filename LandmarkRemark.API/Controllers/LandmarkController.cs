@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using LandmarkRemark.Models.Landmarks;
+using LandmarkRemark.Models.DTOs.Landmarks;
 using LandmarkRemark.Services.Landmarks;
 
 namespace LandmarkRemark.API.Controllers

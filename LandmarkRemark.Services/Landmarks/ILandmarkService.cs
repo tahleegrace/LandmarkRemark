@@ -1,4 +1,4 @@
-﻿using LandmarkRemark.Models.Landmarks;
+﻿using LandmarkRemark.Models.DTOs.Landmarks;
 
 namespace LandmarkRemark.Services.Landmarks
 {

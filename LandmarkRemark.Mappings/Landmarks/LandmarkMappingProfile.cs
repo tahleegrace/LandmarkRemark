@@ -2,7 +2,7 @@
 using NetTopologySuite.Geometries;
 
 using LandmarkRemark.Entities;
-using LandmarkRemark.Models.Landmarks;
+using LandmarkRemark.Models.DTOs.Landmarks;
 
 namespace LandmarkRemark.Mappings.Landmarks
 {

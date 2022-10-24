@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 using LandmarkRemark.Entities;
 using LandmarkRemark.Mappings.Landmarks;
-using LandmarkRemark.Models.Landmarks;
+using LandmarkRemark.Models.DTOs.Landmarks;
 using LandmarkRemark.Repository.Landmarks;
 using LandmarkRemark.Services.Landmarks;
 using NetTopologySuite.Geometries;

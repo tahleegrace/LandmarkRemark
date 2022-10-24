@@ -1,4 +1,4 @@
-﻿namespace LandmarkRemark.Models.Landmarks
+﻿namespace LandmarkRemark.Models.DTOs.Landmarks
 {
     /// <summary>
     /// DTO object for returning landmarks from the API.

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 
 using LandmarkRemark.Entities;
-using LandmarkRemark.Models.Landmarks;
+using LandmarkRemark.Models.DTOs.Landmarks;
 using LandmarkRemark.Repository.Landmarks;
 
 namespace LandmarkRemark.Services.Landmarks
