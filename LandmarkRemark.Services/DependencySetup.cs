@@ -1,4 +1,5 @@
-﻿using LandmarkRemark.Services.Landmarks;
+﻿using LandmarkRemark.Services.Authentication;
+using LandmarkRemark.Services.Landmarks;
 
 namespace LandmarkRemark.Services
 {
@@ -6,6 +7,9 @@ namespace LandmarkRemark.Services
     {
         public static void AddLandmarkRemarkServices(this IServiceCollection services)
         {
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
             services.AddScoped<ILandmarkService, LandmarkService>();
         }
     }
