@@ -26,9 +26,3 @@ I would use OAuth tokens to store authentication credentials.
 The token will be stored in memory in the React application and sent to all APIs. 
 
 The user ID in this token will be stored against the user ID field on the landmarks table.
-
-LND-6:
-------
-I will use SQL Server Full Text Search on the notes field of the Landmarks table. 
-
-I will use a standard equals search on the first name and last name of the Persons table.

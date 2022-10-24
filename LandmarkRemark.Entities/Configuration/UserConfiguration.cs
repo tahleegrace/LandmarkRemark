@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace LandmarkRemark.Entities.Configuration
 {
     /// <summary>
-    /// Sets up seed data for the users table.
+    /// Sets up seed data and computed columns for the users table.
     /// </summary>
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {
@@ -12,8 +12,19 @@ namespace LandmarkRemark.Entities.Configuration
         // Since there is no registration functionality, this file sets up a few test users.
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            // In real life the passwords would be hashed with an appropriate salt and not stored in the codebase.
+            ConfigureComputedColumns(builder);
+            ConfigureSeedData(builder);
+        }
 
+        private void ConfigureComputedColumns(EntityTypeBuilder<User> builder)
+        {
+            builder.Property(nameof(User.FullName))
+                .HasComputedColumnSql("[FirstName] + ' ' + [LastName]", true);
+        }
+
+        private void ConfigureSeedData(EntityTypeBuilder<User> builder)
+        {
+            // In real life the passwords would be hashed with an appropriate salt and not stored in the codebase.
             DateTime creationDate = new DateTime(2022, 10, 18, 12, 45, 0); // EF Core will regenerate all migrations if you don't use a fixed creation date.
 
             // Note: The User IDs need to be specified here as Entity Framework doesn't support generating them automatically (see: https://learn.microsoft.com/en-us/ef/core/modeling/data-seeding#limitations-of-model-seed-data).

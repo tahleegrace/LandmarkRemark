@@ -26,6 +26,12 @@ namespace LandmarkRemark.Entities
         public string LastName { get; set; }
 
         /// <summary>
+        /// Gets the full name of the user.
+        /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public string FullName { get; private set; }
+
+        /// <summary>
         /// Gets or sets the email address of the user.
         /// </summary>
         public string EmailAddress { get; set; }
