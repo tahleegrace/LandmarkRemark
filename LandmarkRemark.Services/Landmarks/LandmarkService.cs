@@ -2,6 +2,7 @@
 
 using LandmarkRemark.Entities;
 using LandmarkRemark.Models.DTOs.Landmarks;
+using LandmarkRemark.Models.Exceptions.Landmarks;
 using LandmarkRemark.Repository.Landmarks;
 
 namespace LandmarkRemark.Services.Landmarks
@@ -32,7 +33,10 @@ namespace LandmarkRemark.Services.Landmarks
         /// <returns>The newly created landmark.</returns>
         public async Task<LandmarkDTO> Create(CreateLandmarkRequest request)
         {
-            // TODO: Check that the request is not null.
+            if (request == null)
+            {
+                throw new LandmarkNotProvidedException();
+            }
 
             var newLandmark = this._mapper.Map<Landmark>(request);
             newLandmark = await this._landmarkRepository.Create(newLandmark);

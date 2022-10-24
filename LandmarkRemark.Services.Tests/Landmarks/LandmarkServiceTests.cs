@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Moq;
+using NetTopologySuite.Geometries;
 using NUnit.Framework;
 
 using LandmarkRemark.Entities;
 using LandmarkRemark.Mappings.Landmarks;
 using LandmarkRemark.Models.DTOs.Landmarks;
+using LandmarkRemark.Models.Exceptions.Landmarks;
 using LandmarkRemark.Repository.Landmarks;
 using LandmarkRemark.Services.Landmarks;
-using NetTopologySuite.Geometries;
 
 namespace LandmarkRemark.Services.Tests.Landmarks
 {
@@ -77,6 +78,24 @@ namespace LandmarkRemark.Services.Tests.Landmarks
             Assert.AreEqual(request.Longitude, result.Longitude);
             Assert.AreEqual(request.Latitude, result.Latitude);
             Assert.AreEqual("Anthony Albanese", result.UserFullName);
+        }
+
+        /// <summary>
+        /// Tests creating a landmark throws an exception when a landmark is not provided.
+        /// </summary>
+        [Test]
+        public void TestCreateLandmarkThrowsExceptionWhenLandmarkNotProvided()
+        {
+            // Set up the repository, mapper and service.
+            var repository = new Mock<ILandmarkRepository>();
+            var mapper = new MapperConfiguration(config => config.AddProfile<LandmarkMappingProfile>()).CreateMapper();
+            var landmarkService = new LandmarkService(repository.Object, mapper);
+
+            // Create the landmark.
+            Assert.ThrowsAsync<LandmarkNotProvidedException>(async () =>
+            {
+                await landmarkService.Create(null);
+            });
         }
 
         /// <summary>

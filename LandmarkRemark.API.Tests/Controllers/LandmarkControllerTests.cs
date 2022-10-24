@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 using LandmarkRemark.API.Controllers;
 using LandmarkRemark.Models.DTOs.Landmarks;
+using LandmarkRemark.Models.Exceptions.Landmarks;
 using LandmarkRemark.Services.Landmarks;
 
 namespace LandmarkRemark.API.Tests.Controllers
@@ -52,6 +53,26 @@ namespace LandmarkRemark.API.Tests.Controllers
             // Verify the correct DTO was returned.
             Assert.AreEqual(StatusCodes.Status200OK, result.StatusCode);
             Assert.AreEqual(mockLandmarkDTO, newLandmark);
+        }
+
+        /// <summary>
+        /// Tests creating a landmark throws an exception when a landmark is not provided.
+        /// </summary>
+        [Test]
+        public async Task TestCreateLandmarkThrowsExceptionWhenLandmarkNotProvided()
+        {
+            // Set up the controller and service.
+            var service = new Mock<ILandmarkService>();
+            service.Setup(s => s.Create(It.IsAny<CreateLandmarkRequest>())).ThrowsAsync(new LandmarkNotProvidedException());
+
+            var landmarkController = new LandmarkController(service.Object);
+
+            // Create the landmark.
+            var response = await landmarkController.Create(null);
+            var result = response.Result as BadRequestObjectResult;
+
+            // Verify the correct DTO was returned.
+            Assert.AreEqual(StatusCodes.Status400BadRequest, result.StatusCode);
         }
 
         /// <summary>

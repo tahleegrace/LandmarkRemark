@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using LandmarkRemark.Models.DTOs.Landmarks;
+using LandmarkRemark.Models.Exceptions.Landmarks;
 using LandmarkRemark.Services.Landmarks;
 
 namespace LandmarkRemark.API.Controllers
@@ -31,7 +32,14 @@ namespace LandmarkRemark.API.Controllers
         [HttpPost]
         public async Task<ActionResult<LandmarkDTO>> Create(CreateLandmarkRequest request)
         {
-            return Ok(await this._landmarkService.Create(request));
+            try
+            {
+                return Ok(await this._landmarkService.Create(request));
+            }
+            catch (LandmarkNotProvidedException)
+            {
+                return BadRequest("Please provide a landmark to create.");
+            }
         }
 
         /// <summary>
