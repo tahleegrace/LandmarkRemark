@@ -74,7 +74,7 @@ namespace LandmarkRemark.Repository.Landmarks
         public async Task<List<Landmark>> Search(string query)
         {
             return await this._context.Landmarks.Include(l => l.User)
-                                                .Where(l => !l.Deleted && EF.Functions.FreeText(l.Notes, query))
+                                                .Where(l => !l.Deleted && (EF.Functions.FreeText(l.Notes, query) || EF.Functions.FreeText(l.User.FullName, query)))
                                                 .ToListAsync();
         }
     }
