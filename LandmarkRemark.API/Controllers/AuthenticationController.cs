@@ -41,7 +41,7 @@ namespace LandmarkRemark.API.Controllers
             {
                 var result = await this._authenticationService.GenerateAuthToken(loginDetails);
 
-                return result;
+                return Ok(result);
             }
             catch (LoginDetailsIncorrectException)
             {

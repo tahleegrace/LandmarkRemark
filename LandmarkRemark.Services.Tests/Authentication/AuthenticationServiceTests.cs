@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 
 using LandmarkRemark.Entities;

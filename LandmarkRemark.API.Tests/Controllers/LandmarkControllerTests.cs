@@ -81,7 +81,7 @@ namespace LandmarkRemark.API.Tests.Controllers
             var response = await landmarkController.Create(null);
             var result = response.Result as BadRequestObjectResult;
 
-            // Verify the correct DTO was returned.
+            // Verify the correct result was returned.
             Assert.AreEqual(StatusCodes.Status400BadRequest, result.StatusCode);
             Assert.AreEqual("Please provide a landmark to create.", result.Value);
         }
