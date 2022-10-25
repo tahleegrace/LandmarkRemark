@@ -1,9 +1,10 @@
-import React from 'react';
-import LandmarkMap from './components/landmark-map/landmark-map';
+import { Outlet } from 'react-router-dom';
 
 function App() {
     return (
-        <LandmarkMap></LandmarkMap>
+        <div className="container-fluid">
+            <Outlet />
+        </div>
   );
 }
 

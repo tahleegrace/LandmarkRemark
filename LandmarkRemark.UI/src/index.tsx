@@ -3,13 +3,25 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LandmarkMap from "./components/landmark-map/landmark-map";
+import AuthenticatedRoute from "./route-guards/authenticated-route";
+import UnauthenticatedOnlyRoute from "./route-guards/unauthenticated-only-route";
+import Login from "./components/login/login";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<App />}>
+                <Route path="" element={<AuthenticatedRoute><LandmarkMap /></AuthenticatedRoute>} />
+                <Route path="login" element={<UnauthenticatedOnlyRoute><Login /></UnauthenticatedOnlyRoute>} />
+            </Route>
+        </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

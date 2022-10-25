@@ -13,8 +13,10 @@
   <ItemGroup>
     <Folder Include="src\components\map\" />
     <Folder Include="src\components\marker\" />
+    <Folder Include="src\components\login\" />
     <Folder Include="src\helpers\" />
     <Folder Include="src\interfaces\authentication\" />
+    <Folder Include="src\route-guards\" />
     <Folder Include="src\services\http\" />
     <Folder Include="src\services\landmarks\" />
   </ItemGroup>

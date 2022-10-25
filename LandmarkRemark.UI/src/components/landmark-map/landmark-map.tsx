@@ -1,6 +1,6 @@
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
 import { cloneDeep, isNil } from "lodash";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import config from "../../config";
 import Map from "../map/map";
 import "./landmark-map.scss";
@@ -9,7 +9,6 @@ import { ILandmarksService } from "../../services/landmarks/landmarks.service";
 import { LandmarkDTO } from "../../interfaces/landmarks/landmark-dto";
 import Marker from "../marker/marker";
 import { container } from "../../ioc";
-import { IAuthenticationService } from "../../services/authentication/authentication.service";
 
 const render = (status: Status) => {
     return <h1>{status}</h1>;
@@ -21,17 +20,7 @@ const allLandmarksView = 'all-landmarks';
 const searchLandmarksView = 'search-landmarks';
 
 function LandmarkMap() {
-    const authenticationService = container.get<IAuthenticationService>("authentication-service");
     const landmarksService = container.get<ILandmarksService>("landmarks-service");
-
-    // Login as a dummy user.
-    // TODO: Add a login screen.
-    const loginDetails = {
-        emailAddress: 'anthony.albanese@example.com',
-        password: 'anthonyalbanese'
-    };
-
-    authenticationService.login(loginDetails.emailAddress, loginDetails.password).then(() => { });
 
     // Create the initial zoom level and center state.
     const [zoom] = useState(10);
@@ -74,6 +63,8 @@ function LandmarkMap() {
                     newLandmarks.push(result);
                     setLandmarks(newLandmarks);
                 }
+
+                alert("Landmark created successfully");
             }
         }
     };
